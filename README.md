@@ -23,6 +23,8 @@ Tech Stack:
 
 Project API's: 
 (What API's are you using in your project? – List the names and a link to their API DOCUMENTATION)
+Google Places API
+
 
 Roles: 
 (What is each person going to be working on?
