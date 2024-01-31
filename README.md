@@ -23,7 +23,6 @@ Tech Stack:
 
 Project API's: 
 (What API's are you using in your project? – List the names and a link to their API DOCUMENTATION)
-AIzaSyCdNHfY5RyVkQ2QKzJ3-GPOrDX6OHQeJk4
 
 Roles: 
 (What is each person going to be working on?
