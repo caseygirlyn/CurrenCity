@@ -12,7 +12,7 @@ Welcome to the CurrenCity App! This application allows you to get real-time info
 
 - **Frontend:** HTML, CSS, Bootstrap and JavaScript
 - **Libraries:** Day.js and jQuery
-- **API:** OpenWeatherMap, Google Places API and  
+- **API:** OpenWeatherMap, Google Places API and ExchangeRate-API 
 - **Version Control:** Git
 
 ## Screenshots
