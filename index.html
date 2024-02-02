@@ -11,12 +11,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
     <title>CurrenCity</title>
 </head>
 
 <body>
-    <header class="container-fluid text-center text-white p-2 weather-header">
+    <main>
+    <header class="container-fluid text-center text-white p-2 weather-header" style="margin-top: 10vw;">
         <img src="./assets/images/CurrenCity.png" alt="">
     </header>
 
@@ -25,8 +26,8 @@
         <div class="row justify-content-md-center">
             <div class="col col-lg-4">
                 <div class="input-group mb-3 ">
-                    <input id="search-input" type="text" class="form-control form-control-lg rounded-0"
-                        placeholder="Search for a City:" aria-label="Search for a City:"
+                    <input id="search-input" type="text" class="form-control form-control-lg rounded-0 text-capitalize"
+                        placeholder="Where are you travelling to?" aria-label="Where are you travelling to?"
                         aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button id="search-button" class="btn btn-outline-secondary rounded-0 btn-lg" type="button"><i
@@ -47,8 +48,9 @@
         </div>
     </div>
     <div class="container-fluid mt-3" style="max-width: 1400px">
-        <div id="map" class="mt-4 w-100" style="height:500px;"></div>
+        <div id="map" class="mt-4 w-100"></div>
     </div>
+    </main>
     <!-- Day.js -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <!-- jQuery -->
@@ -57,6 +59,10 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="./assets/js/script.js"></script>
-
+    
+    <!-- Google Places API -->
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key={to_add_later}&callback=initMap&libraries=places&v=weekly"
+    defer></script>
 </body>
 </html>
