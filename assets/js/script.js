@@ -267,7 +267,7 @@ function displayForecast(city) {
               currency = 'TWD';
             }
 
-            let currencyRate = result.rates[currency];
+            let currencyRate = result.rates[currency].toFixed(2);
 
             if (currencyRate) {
               let currencyData = `<p class='currencyText'>1 GBP = ${currencyRate} ${currency}</p>`;
