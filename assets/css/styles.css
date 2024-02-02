@@ -1,0 +1,17 @@
+:root {
+    --primary-dark: #885053;
+    --secondary-light:  #FFD891;
+  }
+
+.bg-forecasts{
+    background-color: #FFF4e1 !important;
+    border: 1px solid #FFD891 !important;
+}
+
+.primary-dark-text{
+    color: var(--primary-dark);
+}
+
+input#search-input {
+    border-color: #6c757d;
+}
