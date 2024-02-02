@@ -23,7 +23,7 @@ function checkLSData() {
       displayForecast(lsCity);
     }
     // Create the button element and set the text to city name
-    btnEl = $('<button>').addClass('btn btn-outline-dark mx-1 text-capitalize').text(lsCity);
+    btnEl = $('<button>').addClass('btn btn-outline-dark m-1 text-capitalize').text(lsCity);
     btnEl.attr('data-city', lsCity);
     listGroup.append(btnEl); // Append the button to the list button group
   }
@@ -61,6 +61,9 @@ searchButton.on('click', function (event) {
 });
 
 function displayForecast(city) {
+
+  let currencyExchangeDiv = $('#currencyExchange');
+  currencyExchangeDiv.empty();
 
   // Create variable queryURL and store the URL with parameters city and appid to make an API call
   let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=6a43ea209a0fd6d7d6a35882a4db10c4`;
@@ -103,7 +106,7 @@ function displayForecast(city) {
           iconSrc = './assets/images/icons/cloudy.svg'
         } else if (icon === '09d' || icon === '09n') {
           iconSrc = './assets/images/icons/shower-rain.svg'
-        }else if (icon === '10d' || icon === '10n') {
+        } else if (icon === '10d' || icon === '10n') {
           iconSrc = './assets/images/icons/rain.svg'
         } else if (icon === '11d' || icon === '11n') {
           iconSrc = './assets/images/icons/thunder.svg'
@@ -119,27 +122,27 @@ function displayForecast(city) {
         let cityDate = result.list[i].dt_txt;
         let date = dayjs(cityDate).format('ddd D/M/YYYY');
         let pDate = $('<p>');
-        pDate.addClass('fw-bold mb-0').text(date);
+        pDate.addClass('fw-bold mb-0 small-text').text(date);
 
         // Get the temperature value from the API response and add it into <p> tag 
         let temperature = Math.floor(result.list[i].main.temp - 273.15);
         let pTemp = $('<p>');
-        pTemp.addClass('mb-0').text(`Temperature: ${temperature} °C`);
+        pTemp.addClass('mb-0 small-text').text(`Temperature: ${temperature} °C`);
 
         // Get the wind speed value from the API response and add it into <p> tag
         // Multiply the speed value by 3.6 to convert meter per second to kilometer per hour
         let wind = result.list[i].wind.speed * 3.6;
         let pWind = $('<p>');
-        pWind.addClass('mb-0').text(`Wind: ${wind.toFixed(2)} KPH`);
+        pWind.addClass('mb-0 small-text').text(`Wind: ${wind.toFixed(2)} KPH`);
 
         // Get the humidity value from the API response and add it into <p> tag 
         let humidity = result.list[i].main.humidity;
         let pHumidity = $('<p>');
-        pHumidity.addClass('mb-0').text(`Humidity: ${humidity} %`);
+        pHumidity.addClass('mb-0 small-text').text(`Humidity: ${humidity} %`);
 
         // Create divCol variable and append elements to display 5 day weather forecast
         let divCol = $('<div>');
-        divCol.addClass('col-sm col-xs-12 p-3 bg-forecasts rounded-2 text-center m-1').css('border', '3px solid #fff')
+        divCol.addClass('col-sm col-xs-12 px-2 py-3 bg-forecasts rounded-2 text-center m-1').css('border', '3px solid #fff')
         divCol.append(pDate, iconForecast, pTemp, pWind, pHumidity);
 
         // Append divCol to rowContainer
@@ -161,9 +164,8 @@ function displayForecast(city) {
             return response.json();
           }).then(function (result) {
 
-            if (countryCode == 'ES'
-              || countryCode == 'FR'
-              || countryCode == 'MC') {
+            if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE'
+            ) {
               currency = 'EUR';
             } else if (countryCode == 'US') {
               currency = 'USD';
@@ -177,15 +179,101 @@ function displayForecast(city) {
               currency = 'SGD';
             } else if (countryCode == 'PH') {
               currency = 'PHP';
+            } else if (countryCode == 'IS') {
+              currency = 'ISK';
+            } else if (countryCode == 'NO') {
+              currency = 'NOK';
+            } else if (countryCode == 'LI') {
+              currency = 'CHF';
+            } else if (countryCode == 'CH') {
+              currency = 'CHF';
+            } else if (countryCode == 'BA') {
+              currency = 'BAM';
+            } else if (countryCode == 'ME') {
+              currency = 'EUR';
+            } else if (countryCode == 'MD') {
+              currency = 'MDL';
+            } else if (countryCode == 'MK') {
+              currency = 'MKD';
+            } else if (countryCode == 'GE') {
+              currency = 'GEL';
+            } else if (countryCode == 'AL') {
+              currency = 'ALL';
+            } else if (countryCode == 'RS') {
+              currency = 'RSD';
+            } else if (countryCode == 'TR') {
+              currency = 'TRY';
+            } else if (countryCode == 'UA') {
+              currency = 'UAH';
+            } else if (countryCode == 'XK') {
+              currency = 'EUR';
+            } else if (countryCode == 'AM') {
+              currency = 'AMD';
+            } else if (countryCode == 'BY') {
+              currency = 'BYN';
+            } else if (countryCode == 'AZ') {
+              currency = 'AZN';
+            } else if (countryCode == 'DZ') {
+              currency = 'DZD';
+            } else if (countryCode == 'LB') {
+              currency = 'LBP';
+            } else if (countryCode == 'SY') {
+              currency = 'SYP';
+            } else if (countryCode == 'EG') {
+              currency = 'EGP';
+            } else if (countryCode == 'LY') {
+              currency = 'LYD';
+            } else if (countryCode == 'TN') {
+              currency = 'TND';
+            } else if (countryCode == 'IL') {
+              currency = 'ILS';
+            } else if (countryCode == 'MA') {
+              currency = 'MAD';
+            } else if (countryCode == 'JO') {
+              currency = 'JOD';
+            } else if (countryCode == 'PS') {
+              currency = 'ILS';
+            } else if (countryCode == 'AR') {
+              currency = 'ARS';
+            } else if (countryCode == 'AU') {
+              currency = 'AUD';
+            } else if (countryCode == 'BR') {
+              currency = 'BRL';
+            } else if (countryCode == 'CA') {
+              currency = 'CAD';
+            } else if (countryCode == 'CN_X_HK') {
+              currency = 'CNY';
+            } else if (countryCode == 'HK') {
+              currency = 'HKD';
+            } else if (countryCode == 'IN') {
+              currency = 'INR';
+            } else if (countryCode == 'JP') {
+              currency = 'JPY';
+            } else if (countryCode == 'MX') {
+              currency = 'MXN';
+            } else if (countryCode == 'NG') {
+              currency = 'NGN';
+            } else if (countryCode == 'NZ') {
+              currency = 'NZD';
+            } else if (countryCode == 'RU') {
+              currency = 'RUB';
+            } else if (countryCode == 'SG') {
+              currency = 'SGD';
+            } else if (countryCode == 'ZA') {
+              currency = 'ZAR';
+            } else if (countryCode == 'KR') {
+              currency = 'KRW';
+            } else if (countryCode == 'TW') {
+              currency = 'TWD';
             }
 
             let currencyRate = result.rates[currency];
-            
+
             if (currencyRate) {
-              let currencyData = `<p>1 GBP = ${currencyRate} ${currency}</p>`;
-              let currencyExchangeDiv = $('#currencyExchange');
-              currencyExchangeDiv.empty();
+              let currencyData = `<p class='currencyText'>1 GBP = ${currencyRate} ${currency}</p>`;
               currencyExchangeDiv.append(currencyData);
+            } else {
+              currencyExchangeDiv.empty();
             }
 
           });
@@ -217,9 +305,9 @@ function displayForecast(city) {
 
       window.initMap = initMap;
 
-      $('#map').css('height','500px');
-      $('.weather-header').css({'margin-top': '0', 'transition': 'all .3s ease-out'});
-      
+      $('#map').css('height', '500px');
+      $('.weather-header').css({ 'margin-top': '0', 'transition': 'all .75s ease-out' });
+
     });
 
 

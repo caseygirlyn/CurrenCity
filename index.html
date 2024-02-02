@@ -17,39 +17,40 @@
 
 <body>
     <main>
-    <header class="container-fluid text-center text-white p-2 weather-header" style="margin-top: 10vw;">
-        <img src="./assets/images/CurrenCity.png" alt="">
-    </header>
+        <header class="container-fluid text-center text-white p-2 weather-header" style="margin-top: 10vw;">
+            <img src="./assets/images/CurrenCity.png" alt="">
+        </header>
 
-    <!-- max-width for ultra wide resolutions -->
-    <div class="container-fluid mt-3" style="max-width: 1400px">
-        <div class="row justify-content-md-center">
-            <div class="col col-lg-4">
-                <div class="input-group mb-3 ">
-                    <input id="search-input" type="text" class="form-control form-control-lg rounded-0 text-capitalize"
-                        placeholder="Where are you travelling to?" aria-label="Where are you travelling to?"
-                        aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button id="search-button" class="btn btn-outline-secondary rounded-0 btn-lg" type="button"><i
-                                class="bi bi-search"></i></button>
+        <!-- max-width for ultra wide resolutions -->
+        <div class="container-fluid mt-3" style="max-width: 1400px">
+            <div class="row justify-content-md-center">
+                <div class="col col-lg-4">
+                    <div class="input-group mb-3 ">
+                        <input id="search-input" type="text"
+                            class="form-control form-control-lg rounded-0 text-capitalize"
+                            placeholder="Where are you travelling to?" aria-label="Where are you travelling to?"
+                            aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button id="search-button" class="btn btn-outline-secondary rounded-0 btn-lg"
+                                type="button"><i class="bi bi-search"></i></button>
+                        </div>
                     </div>
                 </div>
+                <div class="col-lg-12 pb-3 text-center">
+                    <div id="history"></div>
+                </div>
+                <div class="text-center" id="currencyExchange">
+                </div>
             </div>
-            <div class="col-lg-12 pb-3 text-center">
-                <div id="history"></div>
-            </div>
-            <div class="text-center" id="currencyExchange">
+            <div class="row justify-content-md-center">
+                <div class="pb-3" style="max-width: 800px">
+                    <section id="forecast" class="row mt-3" role="region" aria-live="polite"></section>
+                </div>
             </div>
         </div>
-        <div class="row justify-content-md-center">
-            <div class="col-lg-9 pb-3">
-                <section id="forecast" class="row mt-3" role="region" aria-live="polite"></section>
-            </div>
+        <div class="container-fluid mt-3" style="max-width: 1400px">
+            <div id="map" class="mt-4 w-100"></div>
         </div>
-    </div>
-    <div class="container-fluid mt-3" style="max-width: 1400px">
-        <div id="map" class="mt-4 w-100"></div>
-    </div>
     </main>
     <!-- Day.js -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
@@ -59,10 +60,10 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="./assets/js/script.js"></script>
-    
+
     <!-- Google Places API -->
-    <script
-    src="https://maps.googleapis.com/maps/api/js?key={to_add_later}&callback=initMap&libraries=places&v=weekly"
-    defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={to_add_later}&callback=initMap&libraries=places&v=weekly"
+        defer></script>
 </body>
+
 </html>
