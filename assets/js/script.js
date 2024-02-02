@@ -306,7 +306,7 @@ function displayForecast(city) {
       window.initMap = initMap;
 
       $('#map').css('height', '500px');
-      $('.weather-header').css({ 'margin-top': '0', 'transition': 'all .3s ease-out' });
+      $('.weather-header').css({ 'margin-top': '0', 'transition': 'all .75s ease-out' });
 
     });
 

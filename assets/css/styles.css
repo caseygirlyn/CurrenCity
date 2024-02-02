@@ -9,6 +9,11 @@
     border: 1px solid #FFD891 !important;
 }
 
+img.iconToday {
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+
 .primary-dark-text{
     color: var(--primary-dark);
 }
