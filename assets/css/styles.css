@@ -1,11 +1,17 @@
 :root {
     --primary-dark: #885053;
     --secondary-light:  #FFD891;
+    --secondary-dark: #d5573b;
   }
 
 .bg-forecasts{
     background-color: #FFF4e1 !important;
     border: 1px solid #FFD891 !important;
+}
+
+img.iconToday {
+    margin-top: -10px;
+    margin-bottom: -10px;
 }
 
 .primary-dark-text{
@@ -14,4 +20,17 @@
 
 input#search-input {
     border-color: #6c757d;
+}
+
+.small-text{
+    font-size: 12px;
+}
+
+.currencyText {
+    background-color: var(--secondary-dark);
+    color: #fff;
+    margin: auto;
+    padding: 0.25rem 0.75rem;
+    width: max-content;
+    font-size: 20px;
 }
