@@ -164,7 +164,7 @@ function displayForecast(city) {
             return response.json();
           }).then(function (result) {
 
-            if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE' || countryCode == 'GR'
+            if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE' || countryCode == 'GR' || countryCode == 'ME' || countryCode == 'XK'
             ) {
               currency = 'EUR';
             } else if (countryCode == 'US') {
@@ -189,8 +189,6 @@ function displayForecast(city) {
               currency = 'CHF';
             } else if (countryCode == 'BA') {
               currency = 'BAM';
-            } else if (countryCode == 'ME') {
-              currency = 'EUR';
             } else if (countryCode == 'MD') {
               currency = 'MDL';
             } else if (countryCode == 'MK') {
@@ -205,8 +203,6 @@ function displayForecast(city) {
               currency = 'TRY';
             } else if (countryCode == 'UA') {
               currency = 'UAH';
-            } else if (countryCode == 'XK') {
-              currency = 'EUR';
             } else if (countryCode == 'AM') {
               currency = 'AMD';
             } else if (countryCode == 'BY') {
@@ -306,7 +302,7 @@ function displayForecast(city) {
       window.initMap = initMap;
 
       $('#map').css('height', '500px');
-      $('.weather-header').css({ 'margin-top': '0', 'transition': 'all .75s ease-out' });
+      $('.weather-header').css({ 'margin-top': '50px', 'transition': 'all .75s ease-out' });
 
     });
 
