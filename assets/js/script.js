@@ -56,30 +56,30 @@ searchButton.on('click', function (event) {
 
     // nextPageLink.addEventListener('click', function(event) {
     //   event.preventDefault(); // Prevent the default link behavior
-    
+
     //   // Add the desired transition effect
     //   document.querySelector('#page2').style.opacity = '0';
-    
+
     //   // Wait for the transition to complete before scrolling and navigating to the next page
     //   setTimeout(function() {
     //     // Scroll to a specific position on the page
     //     window.scrollTo({ top: 500, behavior: 'smooth' });
-    
+
     //     // Navigate to the next page
     //     window.location.href = nextPageLink.href;
     //   }, 500); // Adjust the timeout value to match the transition duration
     // });
 
-//display searched city
-// Get the user input
-const citySearch = document.getElementById('search-input').value;
+    //display searched city
+    // Get the user input
+    const citySearch = document.getElementById('search-input').value;
 
-  // Convert the text to capital letters
-  const cityUpperCase = citySearch.toUpperCase();
+    // Convert the text to capital letters
+    const cityUpperCase = citySearch.toUpperCase();
 
-// Update the text content of the cityDisplay element
-const cityDisplay = document.getElementById('cityDisplay');
-cityDisplay.textContent = cityUpperCase;
+    // Update the text content of the cityDisplay element
+    const cityDisplay = document.getElementById('cityDisplay');
+    cityDisplay.textContent = cityUpperCase;
 
     //displayCurrentWeather(city);
     displayForecast(city);
@@ -118,7 +118,7 @@ function displayForecast(city) {
 
       let countryCode = result.city.country;
       let h3El = $('<h3>');
-      h3El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text glass');
+      h3El.text(`5-day Weather Forecast:`).addClass('w-100 text-capitalize text-center primary-dark-text glass');
       forecast.append(h3El);
 
       //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
