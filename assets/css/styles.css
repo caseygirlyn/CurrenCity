@@ -33,7 +33,12 @@
 
 
       #cityDisplay {
+        display: flex;
+        height: 100%;
+        width: 100%;
           font-size: 5rem;
+          align-items: center;
+          justify-content: center;
       }
 /* .bg-forecasts{
     background-color: #FFF4e1 !important;
