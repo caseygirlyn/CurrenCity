@@ -4,6 +4,12 @@
     --secondary-dark: #d5573b;
   }
 
+/* body {
+    background-image: url("../images/bagus-ghufron-uMH-d3WWJhM-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+} */
+
 .bg-forecasts{
     background-color: #FFF4e1 !important;
     border: 1px solid #FFD891 !important;
@@ -34,3 +40,4 @@ input#search-input {
     width: max-content;
     font-size: 20px;
 }
+
