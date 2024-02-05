@@ -5,6 +5,7 @@ let todaySection = $('#today');
 let forecast = $('#forecast');
 let divContainer = $('<div>');
 let rowContainer = $('<div>');
+let cityDisplay = $('#cityDisplay');
 
 let map;
 let service;
@@ -69,6 +70,10 @@ searchButton.on('click', function (event) {
     //     window.location.href = nextPageLink.href;
     //   }, 500); // Adjust the timeout value to match the transition duration
     // });
+
+//display searched city
+
+
 
     //displayCurrentWeather(city);
     displayForecast(city);
