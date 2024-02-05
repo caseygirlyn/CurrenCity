@@ -23,7 +23,7 @@ function checkLSData() {
       displayForecast(lsCity);
     }
     // Create the button element and set the text to city name
-    btnEl = $('<button>').addClass('btn btn-outline-dark mx-1 text-capitalize').text(lsCity);
+    btnEl = $('<button>').addClass('btn btn-outline-dark mx-1 text-capitalize glass').text(lsCity);
     btnEl.attr('data-city', lsCity);
     listGroup.append(btnEl); // Append the button to the list button group
   }
@@ -48,11 +48,16 @@ searchButton.on('click', function (event) {
   if (cityExists === 0 && city !== '') {
     // Set the key of the new city to localStorage.length + 1
     localStorage.setItem(localStorage.length + 1, city);
+
+
     //displayCurrentWeather(city);
     displayForecast(city);
     let btnEl = $('<button>').addClass('btn btn-outline-dark m-1 text-capitalize').text(city);
     // Append the button to the list button group below the search form
     btnEl.attr('data-city', city);
+
+    btnEl.addClass('close').attr('data-dismiss', 'alert').attr('aria-label', 'close');
+
     listGroup.append(btnEl);
     searchInput.val('');
   } else {
@@ -79,7 +84,7 @@ function displayForecast(city) {
 
       let countryCode = result.city.country;
       let h3El = $('<h3>');
-      h3El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text');
+      h3El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text glass');
       forecast.append(h3El);
 
       //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
@@ -103,7 +108,7 @@ function displayForecast(city) {
           iconSrc = './assets/images/icons/cloudy.svg'
         } else if (icon === '09d' || icon === '09n') {
           iconSrc = './assets/images/icons/shower-rain.svg'
-        }else if (icon === '10d' || icon === '10n') {
+        } else if (icon === '10d' || icon === '10n') {
           iconSrc = './assets/images/icons/rain.svg'
         } else if (icon === '11d' || icon === '11n') {
           iconSrc = './assets/images/icons/thunder.svg'
@@ -139,7 +144,7 @@ function displayForecast(city) {
 
         // Create divCol variable and append elements to display 5 day weather forecast
         let divCol = $('<div>');
-        divCol.addClass('col-sm col-xs-12 p-3 bg-forecasts rounded-2 text-center m-1').css('border', '3px solid #fff')
+        divCol.addClass('col-sm col-xs-12 p-3 bg-forecasts rounded-2 text-center m-1 glass').css('border', '3px solid #fff')
         divCol.append(pDate, iconForecast, pTemp, pWind, pHumidity);
 
         // Append divCol to rowContainer
@@ -180,7 +185,7 @@ function displayForecast(city) {
             }
 
             let currencyRate = result.rates[currency];
-            
+
             if (currencyRate) {
               let currencyData = `<p>1 GBP = ${currencyRate} ${currency}</p>`;
               let currencyExchangeDiv = $('#currencyExchange');
@@ -217,9 +222,9 @@ function displayForecast(city) {
 
       window.initMap = initMap;
 
-      $('#map').css('height','500px');
-      $('.weather-header').css({'margin-top': '0', 'transition': 'all .3s ease-out'});
-      
+      $('#map').css('height', '500px');
+      $('.weather-header').css({ 'margin-top': '0', 'transition': 'all .3s ease-out' });
+
     });
 
 
