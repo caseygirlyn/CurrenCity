@@ -5,7 +5,6 @@ let todaySection = $('#today');
 let forecast = $('#forecast');
 let divContainer = $('<div>');
 let rowContainer = $('<div>');
-let cityDisplay = $('#cityDisplay');
 
 let map;
 let service;
@@ -72,8 +71,12 @@ searchButton.on('click', function (event) {
     // });
 
 //display searched city
+// Get the user input
+const citySearch = document.getElementById('search-input').value;
 
-
+// Update the text content of the cityDisplay element
+const cityDisplay = document.getElementById('cityDisplay');
+cityDisplay.textContent = citySearch;
 
     //displayCurrentWeather(city);
     displayForecast(city);
