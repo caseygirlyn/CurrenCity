@@ -4,29 +4,57 @@
     --secondary-dark: #d5573b;
   }
 
-/* body {
-    background-image: url("../images/bagus-ghufron-uMH-d3WWJhM-unsplash.jpg");
-    background-size: cover;
-    background-position: center;
-} */
+  #page1 {
 
-.bg-forecasts{
-    background-color: #FFF4e1 !important;
-    border: 1px solid #FFD891 !important;
+        background-image: url("../images/logo/CurrenCitywithName.svg");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+  
+.glass {
+    background: rgba( 255, 255, 255, 0.15 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 1px );
+    -webkit-backdrop-filter: blur( 1px );
+    border-radius: 8px;
 }
 
-img.iconToday {
+      input#search-input {
+          border-color: #6c757d;
+          background-color: whitesmoke;
+          color: black;
+
+      }
+
+      .bi-search {
+          color: black;
+      } 
+
+
+      #cityDisplay {
+        display: flex;
+        height: 100%;
+        width: 100%;
+          font-size: 5rem;
+          align-items: center;
+          justify-content: center;
+      }
+/* .bg-forecasts{
+    background-color: #FFF4e1 !important;
+    border: 1px solid #FFD891 !important;
+} */
+
+/* img.iconToday {
     margin-top: -10px;
     margin-bottom: -10px;
+
 }
 
 .primary-dark-text{
     color: var(--primary-dark);
 }
 
-input#search-input {
-    border-color: #6c757d;
-}
 
 .small-text{
     font-size: 12px;
@@ -39,5 +67,5 @@ input#search-input {
     padding: 0.25rem 0.75rem;
     width: max-content;
     font-size: 20px;
-}
+} */
 
