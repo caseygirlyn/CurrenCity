@@ -74,9 +74,12 @@ searchButton.on('click', function (event) {
 // Get the user input
 const citySearch = document.getElementById('search-input').value;
 
+  // Convert the text to capital letters
+  const cityUpperCase = citySearch.toUpperCase();
+
 // Update the text content of the cityDisplay element
 const cityDisplay = document.getElementById('cityDisplay');
-cityDisplay.textContent = citySearch;
+cityDisplay.textContent = cityUpperCase;
 
     //displayCurrentWeather(city);
     displayForecast(city);

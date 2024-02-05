@@ -31,6 +31,10 @@
           color: black;
       } 
 
+
+      #cityDisplay {
+          font-size: 5rem;
+      }
 /* .bg-forecasts{
     background-color: #FFF4e1 !important;
     border: 1px solid #FFD891 !important;
