@@ -14,6 +14,7 @@ let infowindow;
 let lat;
 let lon;
 
+
 // Check if the localstorage has existing data
 function checkLSData() {
   for (let i = 1; i < localStorage.length + 1; i++) {
@@ -24,7 +25,7 @@ function checkLSData() {
     }
     // Create the button element and set the text to city name
 
-    btnEl = $('<button>').addClass('btn btn-outline-dark m-1 text-capitalize').text(lsCity);
+    btnEl = $('<button>').addClass('btn btn-outline-dark m-1 text-capitalize glass').text(lsCity);
 
     btnEl.attr('data-city', lsCity);
     listGroup.append(btnEl); // Append the button to the list button group
@@ -51,6 +52,23 @@ searchButton.on('click', function (event) {
     // Set the key of the new city to localStorage.length + 1
     localStorage.setItem(localStorage.length + 1, city);
 
+    // const nextPageLink = document.querySelector('.next-page-link');
+
+    // nextPageLink.addEventListener('click', function(event) {
+    //   event.preventDefault(); // Prevent the default link behavior
+    
+    //   // Add the desired transition effect
+    //   document.querySelector('#page2').style.opacity = '0';
+    
+    //   // Wait for the transition to complete before scrolling and navigating to the next page
+    //   setTimeout(function() {
+    //     // Scroll to a specific position on the page
+    //     window.scrollTo({ top: 500, behavior: 'smooth' });
+    
+    //     // Navigate to the next page
+    //     window.location.href = nextPageLink.href;
+    //   }, 500); // Adjust the timeout value to match the transition duration
+    // });
 
     //displayCurrentWeather(city);
     displayForecast(city);
