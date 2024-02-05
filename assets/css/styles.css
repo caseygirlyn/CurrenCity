@@ -1,6 +1,7 @@
 :root {
     --primary-dark: #885053;
     --secondary-light:  #FFD891;
+    --secondary-dark: #d5573b;
   }
 
 /* body {
@@ -14,22 +15,29 @@
     border: 1px solid #FFD891 !important;
 }
 
+img.iconToday {
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+
 .primary-dark-text{
     color: var(--primary-dark);
 }
 
 input#search-input {
-    border-color: #6c757d;;
+    border-color: #6c757d;
 }
 
-/* .glass {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
-    color: #FFFFFF;
-    /* color: var (--primary-dark); */
-    /* color: var (var(--secondary-light)) */
-    /* border: 1px solid black; */
-  /* } 
+.small-text{
+    font-size: 12px;
+}
+
+.currencyText {
+    background-color: var(--secondary-dark);
+    color: #fff;
+    margin: auto;
+    padding: 0.25rem 0.75rem;
+    width: max-content;
+    font-size: 20px;
+}
+
