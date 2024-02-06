@@ -5,12 +5,8 @@ let todaySection = $('#today');
 let forecast = $('#forecast');
 let divContainer = $('<div>');
 let rowContainer = $('<div>');
+let attactionsTitle = $('#attractionsTitle');
 
-let map;
-let service;
-let infowindow;
-
-// Set default latitude and longitude to London
 let lat;
 let lon;
 
@@ -70,6 +66,8 @@ function displayForecast(city) {
   rowContainer.empty();
   divContainer.empty();
   forecast.empty();
+  $('#places').empty();
+  attactionsTitle.empty();
 
   //  Method to call 5 day / 3 hour forecast data
   fetch(queryURL)
@@ -81,9 +79,11 @@ function displayForecast(city) {
       lon = result.city.coord.lon;
 
       let countryCode = result.city.country;
-      let h3El = $('<h3>');
-      h3El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text');
-      forecast.append(h3El);
+      let h2El = $('<h2>');
+      h2El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text');
+      forecast.append(h2El);
+
+      attactionsTitle.append(`Attractions in ${city}`);
 
       //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
       for (let i = 1; i < result.list.length; i += 8) {
@@ -140,13 +140,13 @@ function displayForecast(city) {
         let pHumidity = $('<p>');
         pHumidity.addClass('mb-0 small-text').text(`Humidity: ${humidity} %`);
 
-        // Create divCol variable and append elements to display 5 day weather forecast
+        // Create divCol variable and append elements to display 5 day weather forecast 
         let divCol = $('<div>');
-        divCol.addClass('col-sm col-xs-12 px-2 py-3 bg-forecasts rounded-2 text-center m-1').css('border', '3px solid #fff')
+        divCol.addClass('col-sm col-xs-12 px-2 py-3 bg-forecasts rounded-2 text-center m-1');
         divCol.append(pDate, iconForecast, pTemp, pWind, pHumidity);
 
         // Append divCol to rowContainer
-        rowContainer.append(divCol).addClass('row m-0');
+        rowContainer.append(divCol).addClass('row m-0 align-content-center flex-row justify-content-center');
 
         // Append rowContainer to forecast section
         forecast.append(rowContainer);
@@ -164,7 +164,7 @@ function displayForecast(city) {
             return response.json();
           }).then(function (result) {
 
-            if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE' || countryCode == 'GR'
+            if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE' || countryCode == 'GR' || countryCode == 'ME' || countryCode == 'XK'
             ) {
               currency = 'EUR';
             } else if (countryCode == 'US') {
@@ -189,8 +189,6 @@ function displayForecast(city) {
               currency = 'CHF';
             } else if (countryCode == 'BA') {
               currency = 'BAM';
-            } else if (countryCode == 'ME') {
-              currency = 'EUR';
             } else if (countryCode == 'MD') {
               currency = 'MDL';
             } else if (countryCode == 'MK') {
@@ -205,8 +203,6 @@ function displayForecast(city) {
               currency = 'TRY';
             } else if (countryCode == 'UA') {
               currency = 'UAH';
-            } else if (countryCode == 'XK') {
-              currency = 'EUR';
             } else if (countryCode == 'AM') {
               currency = 'AMD';
             } else if (countryCode == 'BY') {
@@ -279,38 +275,47 @@ function displayForecast(city) {
           });
       }
 
-      let searchCity = new google.maps.LatLng(lat, lon);
-
-      infowindow = new google.maps.InfoWindow();
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: searchCity,
-        zoom: 15,
+      // Create the map.
+      let pyrmont = { lat: lat, lng: lon };
+      let map = new google.maps.Map(document.getElementById("map"), {
+        center: pyrmont,
+        zoom: 16,
+        mapId: "8d193001f940fde3",
       });
+      // Create the places service.
+      let service = new google.maps.places.PlacesService(map);
+      let getNextPage;
+      let moreButton = document.getElementById("more");
 
-      const request = {
-        query: city,
-        fields: ["name", "geometry"],
+      moreButton.onclick = function () {
+        moreButton.disabled = true;
+        if (getNextPage) {
+          getNextPage();
+        }
       };
 
-      service = new google.maps.places.PlacesService(map);
-      service.findPlaceFromQuery(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-          for (let i = 0; i < results.length; i++) {
-            createMarker(results[i]);
+      // Perform a nearby search.
+      service.nearbySearch(
+        { location: pyrmont, radius: 500, type: "tourist_attraction" },
+        (results, status, pagination) => {
+          if (status !== "OK" || !results) return;
+
+          addPlaces(results, map);
+          moreButton.disabled = !pagination || !pagination.hasNextPage;
+          if (pagination && pagination.hasNextPage) {
+            getNextPage = () => {
+              // Note: nextPage will call the same handler function as the initial call
+              pagination.nextPage();
+            };
           }
+        },
+      );
 
-          map.setCenter(results[0].geometry.location);
-        }
-      });
-
-      window.initMap = initMap;
-
-      $('#map').css('height', '500px');
-      $('.weather-header').css({ 'margin-top': '0', 'transition': 'all .75s ease-out' });
+      $('#page1').css('background', 'none');
+      $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
+      $('#container,#attractions').removeClass('d-none').fadeIn("slow");
 
     });
-
-
 }
 
 listGroup.on('click', 'button', function (event) {
@@ -318,20 +323,95 @@ listGroup.on('click', 'button', function (event) {
   displayForecast(city);
 });
 
-function initMap() {
+function addPlaces(places, map) {
+  let placesList = document.getElementById("places");
+  let infowindow = new google.maps.InfoWindow();
+
+  for (let place of places) {
+    if (place.geometry && place.geometry.location) {
+      let image = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(20, 20),
+      };
+
+      let marker = new google.maps.Marker({
+        map,
+        animation: google.maps.Animation.DROP,
+        icon: image,
+        title: place.name,
+        position: place.geometry.location,
+      });
+
+      let photos = place.photos;
+      let content = document.createElement("div");
+      let placeImage = document.createElement("img");
+      let nameElement = document.createElement("h4");
+      let nameElement2 = document.createElement("h3");
+      let placeRating = document.createElement("div");
+      let placeAddressElement = document.createElement("div");
+
+
+      content.className = 'contentMarker';
+
+      google.maps.event.addListener(marker, "click", () => {
+
+        if (photos) {
+          let placeImageURL = photos[0].getUrl();
+          placeImage.src = placeImageURL;
+          placeImage.className = 'placeImageMarker';
+          content.append(placeImage);
+        }
+
+        nameElement2.textContent = place.name;
+        content.appendChild(nameElement2);
+
+        placeRating.textContent = 'Rating: ' + place.rating;
+        content.appendChild(placeRating);
+
+        placeAddressElement.textContent = place.formatted_address;
+        content.appendChild(placeAddressElement);
+
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+      });
+
+      let li = document.createElement("li");
+
+      if (photos) {
+        // Add sidebar places images
+        let placeImageURL = photos[0].getUrl();
+        placeImage.src = placeImageURL;
+        placeImage.className = 'placeImage';
+        li.style.backgroundImage = `url(${placeImageURL})`;
+        nameElement.textContent = place.name;
+        li.appendChild(nameElement);
+        placesList.appendChild(li);
+
+        li.addEventListener("click", () => {
+
+          map.setCenter(place.geometry.location);
+
+          content.appendChild(placeImage);
+
+          nameElement2.textContent = place.name;
+          content.appendChild(nameElement2);
+
+          placeRating.textContent = 'Rating: ' + place.rating;
+          content.appendChild(placeRating);
+
+          placeAddressElement.textContent = place.formatted_address;
+          content.appendChild(placeAddressElement);
+
+          infowindow.setContent(content);
+          infowindow.open(map, marker);
+
+        });
+
+      }
+
+    }
+  }
 }
-
-function createMarker(place) {
-  if (!place.geometry || !place.geometry.location) return;
-
-  const marker = new google.maps.Marker({
-    map,
-    position: place.geometry.location,
-  });
-
-  google.maps.event.addListener(marker, "click", () => {
-    infowindow.setContent(place.name || "");
-    infowindow.open(map);
-  });
-}
-
