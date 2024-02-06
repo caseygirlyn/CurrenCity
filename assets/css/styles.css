@@ -73,6 +73,7 @@ img.iconToday {
   display: flex;
   max-width: 1280px;
   transition: all 0.5s ease-out;
+  overflow: hidden;
 }
 
 #attractions {
@@ -91,7 +92,6 @@ img.iconToday {
   flex-direction: column;
   flex-basis: 5rem;
   flex-grow: 1;
-  padding: 0 1rem;
   max-width: 30rem;
   height: 100%;
   box-sizing: border-box;
