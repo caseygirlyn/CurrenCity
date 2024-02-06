@@ -5,12 +5,8 @@ let todaySection = $('#today');
 let forecast = $('#forecast');
 let divContainer = $('<div>');
 let rowContainer = $('<div>');
+let attactionsTitle = $('#attractionsTitle');
 
-let map;
-let service;
-let infowindow;
-
-// Set default latitude and longitude to London
 let lat;
 let lon;
 
@@ -23,7 +19,7 @@ function checkLSData() {
       displayForecast(lsCity);
     }
     // Create the button element and set the text to city name
-    btnEl = $('<button>').addClass('btn btn-outline-dark mx-1 text-capitalize').text(lsCity);
+    btnEl = $('<button>').addClass('btn btn-outline-dark m-1 text-capitalize').text(lsCity);
     btnEl.attr('data-city', lsCity);
     listGroup.append(btnEl); // Append the button to the list button group
   }
@@ -62,11 +58,16 @@ searchButton.on('click', function (event) {
 
 function displayForecast(city) {
 
+  let currencyExchangeDiv = $('#currencyExchange');
+  currencyExchangeDiv.empty();
+
   // Create variable queryURL and store the URL with parameters city and appid to make an API call
   let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=6a43ea209a0fd6d7d6a35882a4db10c4`;
   rowContainer.empty();
   divContainer.empty();
   forecast.empty();
+  $('#places').empty();
+  attactionsTitle.empty();
 
   //  Method to call 5 day / 3 hour forecast data
   fetch(queryURL)
@@ -78,9 +79,11 @@ function displayForecast(city) {
       lon = result.city.coord.lon;
 
       let countryCode = result.city.country;
-      let h3El = $('<h3>');
-      h3El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text');
-      forecast.append(h3El);
+      let h2El = $('<h2>');
+      h2El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text');
+      forecast.append(h2El);
+
+      attactionsTitle.append(`Attractions in ${city}`);
 
       //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
       for (let i = 1; i < result.list.length; i += 8) {
@@ -103,7 +106,7 @@ function displayForecast(city) {
           iconSrc = './assets/images/icons/cloudy.svg'
         } else if (icon === '09d' || icon === '09n') {
           iconSrc = './assets/images/icons/shower-rain.svg'
-        }else if (icon === '10d' || icon === '10n') {
+        } else if (icon === '10d' || icon === '10n') {
           iconSrc = './assets/images/icons/rain.svg'
         } else if (icon === '11d' || icon === '11n') {
           iconSrc = './assets/images/icons/thunder.svg'
@@ -119,31 +122,31 @@ function displayForecast(city) {
         let cityDate = result.list[i].dt_txt;
         let date = dayjs(cityDate).format('ddd D/M/YYYY');
         let pDate = $('<p>');
-        pDate.addClass('fw-bold mb-0').text(date);
+        pDate.addClass('fw-bold mb-0 small-text').text(date);
 
         // Get the temperature value from the API response and add it into <p> tag 
         let temperature = Math.floor(result.list[i].main.temp - 273.15);
         let pTemp = $('<p>');
-        pTemp.addClass('mb-0').text(`Temperature: ${temperature} °C`);
+        pTemp.addClass('mb-0 small-text').text(`Temperature: ${temperature} °C`);
 
         // Get the wind speed value from the API response and add it into <p> tag
         // Multiply the speed value by 3.6 to convert meter per second to kilometer per hour
         let wind = result.list[i].wind.speed * 3.6;
         let pWind = $('<p>');
-        pWind.addClass('mb-0').text(`Wind: ${wind.toFixed(2)} KPH`);
+        pWind.addClass('mb-0 small-text').text(`Wind: ${wind.toFixed(2)} KPH`);
 
         // Get the humidity value from the API response and add it into <p> tag 
         let humidity = result.list[i].main.humidity;
         let pHumidity = $('<p>');
-        pHumidity.addClass('mb-0').text(`Humidity: ${humidity} %`);
+        pHumidity.addClass('mb-0 small-text').text(`Humidity: ${humidity} %`);
 
-        // Create divCol variable and append elements to display 5 day weather forecast
+        // Create divCol variable and append elements to display 5 day weather forecast 
         let divCol = $('<div>');
-        divCol.addClass('col-sm col-xs-12 p-3 bg-forecasts rounded-2 text-center m-1').css('border', '3px solid #fff')
+        divCol.addClass('col-sm col-xs-12 px-2 py-3 bg-forecasts rounded-2 text-center m-1');
         divCol.append(pDate, iconForecast, pTemp, pWind, pHumidity);
 
         // Append divCol to rowContainer
-        rowContainer.append(divCol).addClass('row m-0');
+        rowContainer.append(divCol).addClass('row m-0 align-content-center flex-row justify-content-center');
 
         // Append rowContainer to forecast section
         forecast.append(rowContainer);
@@ -161,9 +164,8 @@ function displayForecast(city) {
             return response.json();
           }).then(function (result) {
 
-            if (countryCode == 'ES'
-              || countryCode == 'FR'
-              || countryCode == 'MC') {
+            if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE' || countryCode == 'GR' || countryCode == 'ME' || countryCode == 'XK'
+            ) {
               currency = 'EUR';
             } else if (countryCode == 'US') {
               currency = 'USD';
@@ -177,52 +179,143 @@ function displayForecast(city) {
               currency = 'SGD';
             } else if (countryCode == 'PH') {
               currency = 'PHP';
+            } else if (countryCode == 'IS') {
+              currency = 'ISK';
+            } else if (countryCode == 'NO') {
+              currency = 'NOK';
+            } else if (countryCode == 'LI') {
+              currency = 'CHF';
+            } else if (countryCode == 'CH') {
+              currency = 'CHF';
+            } else if (countryCode == 'BA') {
+              currency = 'BAM';
+            } else if (countryCode == 'MD') {
+              currency = 'MDL';
+            } else if (countryCode == 'MK') {
+              currency = 'MKD';
+            } else if (countryCode == 'GE') {
+              currency = 'GEL';
+            } else if (countryCode == 'AL') {
+              currency = 'ALL';
+            } else if (countryCode == 'RS') {
+              currency = 'RSD';
+            } else if (countryCode == 'TR') {
+              currency = 'TRY';
+            } else if (countryCode == 'UA') {
+              currency = 'UAH';
+            } else if (countryCode == 'AM') {
+              currency = 'AMD';
+            } else if (countryCode == 'BY') {
+              currency = 'BYN';
+            } else if (countryCode == 'AZ') {
+              currency = 'AZN';
+            } else if (countryCode == 'DZ') {
+              currency = 'DZD';
+            } else if (countryCode == 'LB') {
+              currency = 'LBP';
+            } else if (countryCode == 'SY') {
+              currency = 'SYP';
+            } else if (countryCode == 'EG') {
+              currency = 'EGP';
+            } else if (countryCode == 'LY') {
+              currency = 'LYD';
+            } else if (countryCode == 'TN') {
+              currency = 'TND';
+            } else if (countryCode == 'IL') {
+              currency = 'ILS';
+            } else if (countryCode == 'MA') {
+              currency = 'MAD';
+            } else if (countryCode == 'JO') {
+              currency = 'JOD';
+            } else if (countryCode == 'PS') {
+              currency = 'ILS';
+            } else if (countryCode == 'AR') {
+              currency = 'ARS';
+            } else if (countryCode == 'AU') {
+              currency = 'AUD';
+            } else if (countryCode == 'BR') {
+              currency = 'BRL';
+            } else if (countryCode == 'CA') {
+              currency = 'CAD';
+            } else if (countryCode == 'CN_X_HK') {
+              currency = 'CNY';
+            } else if (countryCode == 'HK') {
+              currency = 'HKD';
+            } else if (countryCode == 'IN') {
+              currency = 'INR';
+            } else if (countryCode == 'JP') {
+              currency = 'JPY';
+            } else if (countryCode == 'MX') {
+              currency = 'MXN';
+            } else if (countryCode == 'NG') {
+              currency = 'NGN';
+            } else if (countryCode == 'NZ') {
+              currency = 'NZD';
+            } else if (countryCode == 'RU') {
+              currency = 'RUB';
+            } else if (countryCode == 'SG') {
+              currency = 'SGD';
+            } else if (countryCode == 'ZA') {
+              currency = 'ZAR';
+            } else if (countryCode == 'KR') {
+              currency = 'KRW';
+            } else if (countryCode == 'TW') {
+              currency = 'TWD';
             }
 
-            let currencyRate = result.rates[currency];
-            
+            let currencyRate = result.rates[currency].toFixed(2);
+
             if (currencyRate) {
-              let currencyData = `<p>1 GBP = ${currencyRate} ${currency}</p>`;
-              let currencyExchangeDiv = $('#currencyExchange');
-              currencyExchangeDiv.empty();
+              let currencyData = `<p class='currencyText'>1 GBP = ${currencyRate} ${currency}</p>`;
               currencyExchangeDiv.append(currencyData);
+            } else {
+              currencyExchangeDiv.empty();
             }
 
           });
       }
 
-      let searchCity = new google.maps.LatLng(lat, lon);
-
-      infowindow = new google.maps.InfoWindow();
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: searchCity,
-        zoom: 15,
+      // Create the map.
+      let pyrmont = { lat: lat, lng: lon };
+      let map = new google.maps.Map(document.getElementById("map"), {
+        center: pyrmont,
+        zoom: 16,
+        mapId: "8d193001f940fde3",
       });
+      // Create the places service.
+      let service = new google.maps.places.PlacesService(map);
+      let getNextPage;
+      let moreButton = document.getElementById("more");
 
-      const request = {
-        query: city,
-        fields: ["name", "geometry"],
+      moreButton.onclick = function () {
+        moreButton.disabled = true;
+        if (getNextPage) {
+          getNextPage();
+        }
       };
 
-      service = new google.maps.places.PlacesService(map);
-      service.findPlaceFromQuery(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-          for (let i = 0; i < results.length; i++) {
-            createMarker(results[i]);
+      // Perform a nearby search.
+      service.nearbySearch(
+        { location: pyrmont, radius: 500, type: "tourist_attraction" },
+        (results, status, pagination) => {
+          if (status !== "OK" || !results) return;
+
+          addPlaces(results, map);
+          moreButton.disabled = !pagination || !pagination.hasNextPage;
+          if (pagination && pagination.hasNextPage) {
+            getNextPage = () => {
+              // Note: nextPage will call the same handler function as the initial call
+              pagination.nextPage();
+            };
           }
+        },
+      );
 
-          map.setCenter(results[0].geometry.location);
-        }
-      });
+      $('#page1').css('background', 'none');
+      $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
+      $('#container,#attractions').removeClass('d-none').fadeIn("slow");
 
-      window.initMap = initMap;
-
-      $('#map').css('height','500px');
-      $('.weather-header').css({'margin-top': '0', 'transition': 'all .3s ease-out'});
-      
     });
-
-
 }
 
 listGroup.on('click', 'button', function (event) {
@@ -230,20 +323,95 @@ listGroup.on('click', 'button', function (event) {
   displayForecast(city);
 });
 
-function initMap() {
+function addPlaces(places, map) {
+  let placesList = document.getElementById("places");
+  let infowindow = new google.maps.InfoWindow();
+
+  for (let place of places) {
+    if (place.geometry && place.geometry.location) {
+      let image = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(20, 20),
+      };
+
+      let marker = new google.maps.Marker({
+        map,
+        animation: google.maps.Animation.DROP,
+        icon: image,
+        title: place.name,
+        position: place.geometry.location,
+      });
+
+      let photos = place.photos;
+      let content = document.createElement("div");
+      let placeImage = document.createElement("img");
+      let nameElement = document.createElement("h4");
+      let nameElement2 = document.createElement("h3");
+      let placeRating = document.createElement("div");
+      let placeAddressElement = document.createElement("div");
+
+
+      content.className = 'contentMarker';
+
+      google.maps.event.addListener(marker, "click", () => {
+
+        if (photos) {
+          let placeImageURL = photos[0].getUrl();
+          placeImage.src = placeImageURL;
+          placeImage.className = 'placeImageMarker';
+          content.append(placeImage);
+        }
+
+        nameElement2.textContent = place.name;
+        content.appendChild(nameElement2);
+
+        placeRating.textContent = 'Rating: ' + place.rating;
+        content.appendChild(placeRating);
+
+        placeAddressElement.textContent = place.formatted_address;
+        content.appendChild(placeAddressElement);
+
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+      });
+
+      let li = document.createElement("li");
+
+      if (photos) {
+        // Add sidebar places images
+        let placeImageURL = photos[0].getUrl();
+        placeImage.src = placeImageURL;
+        placeImage.className = 'placeImage';
+        li.style.backgroundImage = `url(${placeImageURL})`;
+        nameElement.textContent = place.name;
+        li.appendChild(nameElement);
+        placesList.appendChild(li);
+
+        li.addEventListener("click", () => {
+
+          map.setCenter(place.geometry.location);
+
+          content.appendChild(placeImage);
+
+          nameElement2.textContent = place.name;
+          content.appendChild(nameElement2);
+
+          placeRating.textContent = 'Rating: ' + place.rating;
+          content.appendChild(placeRating);
+
+          placeAddressElement.textContent = place.formatted_address;
+          content.appendChild(placeAddressElement);
+
+          infowindow.setContent(content);
+          infowindow.open(map, marker);
+
+        });
+
+      }
+
+    }
+  }
 }
-
-function createMarker(place) {
-  if (!place.geometry || !place.geometry.location) return;
-
-  const marker = new google.maps.Marker({
-    map,
-    position: place.geometry.location,
-  });
-
-  google.maps.event.addListener(marker, "click", () => {
-    infowindow.setContent(place.name || "");
-    infowindow.open(map);
-  });
-}
-
