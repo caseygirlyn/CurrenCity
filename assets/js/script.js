@@ -19,7 +19,7 @@ function checkLSData() {
       displayForecast(lsCity);
     }
     // Create the button element and set the text to city name
-    btnEl = $('<button>').addClass('btn btn-outline-dark m-1 text-capitalize').text(lsCity);
+    btnEl = $('<button>').addClass('btn btn-light m-1 text-capitalize').text(lsCity);
     btnEl.attr('data-city', lsCity);
     listGroup.append(btnEl); // Append the button to the list button group
   }
@@ -46,7 +46,7 @@ searchButton.on('click', function (event) {
     localStorage.setItem(localStorage.length + 1, city);
     //displayCurrentWeather(city);
     displayForecast(city);
-    let btnEl = $('<button>').addClass('btn btn-outline-dark m-1 text-capitalize').text(city);
+    let btnEl = $('<button>').addClass('btn btn-light m-1 text-capitalize').text(city);
     // Append the button to the list button group below the search form
     btnEl.attr('data-city', city);
     listGroup.append(btnEl);
@@ -266,7 +266,7 @@ function displayForecast(city) {
             let currencyRate = result.rates[currency].toFixed(2);
 
             if (currencyRate) {
-              let currencyData = `<p class='currencyText'>1 GBP = ${currencyRate} ${currency}</p>`;
+              let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
               currencyExchangeDiv.append(currencyData);
             } else {
               currencyExchangeDiv.empty();
@@ -313,6 +313,7 @@ function displayForecast(city) {
 
       $('#page1').css('background', 'none');
       $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
+      $('.weather-header img').css('width', '220px');
       $('#container,#attractions').removeClass('d-none').fadeIn("slow");
 
     });
@@ -326,6 +327,8 @@ listGroup.on('click', 'button', function (event) {
 function addPlaces(places, map) {
   let placesList = document.getElementById("places");
   let infowindow = new google.maps.InfoWindow();
+
+  console.log(places);
 
   for (let place of places) {
     if (place.geometry && place.geometry.location) {
