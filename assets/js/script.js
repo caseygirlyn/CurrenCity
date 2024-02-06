@@ -362,10 +362,14 @@ function addPlaces(places, map) {
       let nameElement = document.createElement("h4");
       let nameElement2 = document.createElement("h3");
       let placeRating = document.createElement("div");
+      let vicinity = document.createElement("div");
+
       let placeAddressElement = document.createElement("div");
 
 
       content.className = 'contentMarker';
+      vicinity.className = 'fs-6 mb-2';
+      placeRating.className = 'fs-6';
 
       google.maps.event.addListener(marker, "click", () => {
 
@@ -378,6 +382,9 @@ function addPlaces(places, map) {
 
         nameElement2.textContent = place.name;
         content.appendChild(nameElement2);
+
+        vicinity.textContent = place.vicinity;
+        content.appendChild(vicinity);
 
         if (place.rating) {
           placeRating.textContent = 'Rating: ' + place.rating;
@@ -411,6 +418,9 @@ function addPlaces(places, map) {
 
           nameElement2.textContent = place.name;
           content.appendChild(nameElement2);
+
+          vicinity.textContent = place.vicinity;
+          content.appendChild(vicinity);
 
           if (place.rating) {
             placeRating.textContent = 'Rating: ' + place.rating;
