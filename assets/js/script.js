@@ -371,8 +371,10 @@ function addPlaces(places, map) {
         nameElement2.textContent = place.name;
         content.appendChild(nameElement2);
 
-        placeRating.textContent = 'Rating: ' + place.rating;
-        content.appendChild(placeRating);
+        if (place.rating) {
+          placeRating.textContent = 'Rating: ' + place.rating;
+          content.appendChild(placeRating);
+        };
 
         placeAddressElement.textContent = place.formatted_address;
         content.appendChild(placeAddressElement);
@@ -402,8 +404,10 @@ function addPlaces(places, map) {
           nameElement2.textContent = place.name;
           content.appendChild(nameElement2);
 
-          placeRating.textContent = 'Rating: ' + place.rating;
-          content.appendChild(placeRating);
+          if (place.rating) {
+            placeRating.textContent = 'Rating: ' + place.rating;
+            content.appendChild(placeRating);
+          }
 
           placeAddressElement.textContent = place.formatted_address;
           content.appendChild(placeAddressElement);
