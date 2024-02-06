@@ -8,7 +8,7 @@
 #search-input,
 h2,
 h3 {
-  font-family: 'Nunito';
+  font-family: "Nunito";
 }
 
 #page1 {
@@ -62,7 +62,7 @@ img.iconToday {
 }
 
 /* scrolling currency */
-.scrolling-text-box{
+.scrolling-text-box {
   border-width: 10px top;
   border-color: top#d5573b;
   position: relative;
@@ -74,7 +74,7 @@ img.iconToday {
 
 .currency-scroll {
   color: #885053;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 30px;
   animation: scroll-left 12s linear infinite;
   white-space: nowrap;
@@ -88,14 +88,6 @@ img.iconToday {
     transform: translateX(-100%);
   }
 }
-/* .currencyText {
-  background-color: var(--secondary-dark);
-  color: #fff;
-  margin: 1rem auto;
-  padding: 0.25rem 0.75rem;
-  width: max-content;
-  font-size: 20px;
-} */
 
 #container {
   display: flex;
@@ -150,7 +142,7 @@ li {
 ul#places li h4 {
   background-color: #ffffffd1;
   padding: 0.25rem 0.5rem;
-  font-family: 'Nunito';
+  font-family: "Nunito";
 }
 
 #more {
@@ -198,19 +190,6 @@ button.gm-ui-hover-effect {
   right: 0 !important;
 }
 
-@media (max-width: 767px) {
-  #container {
-    display: contents;
-  }
-  #sidebar,
-  #map {
-    width: 100% !important;
-  }
-  #sidebar {
-    margin-top: 1rem;
-  }
-}
-
 .footer {
   position: static;
   bottom: 0;
@@ -224,8 +203,15 @@ button.gm-ui-hover-effect {
   z-index: 1000; /* Ensures the footer appears above other content */
 }
 
-.footer:hover {
+#scrollUp {
+  font-size: 40px;
+  right: 15px;
+  bottom: 15px;
+}
+
+#scrollUp:hover {
   transform: translateY(-10px);
+  transition: transform 0.3s ease;
 }
 
 .footer h2 {
@@ -235,4 +221,20 @@ button.gm-ui-hover-effect {
 .footer p {
   margin-top: 5px;
   color: #e0dfdf;
+}
+
+@media (max-width: 767px) {
+  #container {
+    display: contents;
+  }
+  #sidebar,
+  #map {
+    width: 100% !important;
+  }
+  #sidebar {
+    margin-top: 1rem;
+  }
+  .bg-forecasts {
+    max-width: 150px;
+  }
 }
