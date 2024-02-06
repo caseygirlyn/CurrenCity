@@ -140,9 +140,11 @@ li {
 }
 
 ul#places li h4 {
-  background-color: #ffffffd1;
+  background-color: #fffefeb3;
   padding: 0.25rem 0.5rem;
   font-family: "Nunito";
+  border: 1px solid;
+  font-size: 20px;
 }
 
 #more {
@@ -177,8 +179,14 @@ ul#places li h4 {
 }
 
 .contentMarker h3 {
+  color: var(--secondary-dark);
+  font-size: 20px;
   line-height: 25px;
   margin-top: 0.5rem;
+}
+
+.gm-style .gm-style-iw-c {
+  padding: 18px;
 }
 
 button.gm-ui-hover-effect {
