@@ -6,6 +6,7 @@ let forecast = $('#forecast');
 let divContainer = $('<div>');
 let rowContainer = $('<div>');
 let attactionsTitle = $('#attractionsTitle');
+let clearSearchHistory = $('#clearSearchHistory');
 
 let lat;
 let lon;
@@ -312,9 +313,10 @@ function displayForecast(city) {
       );
 
       $('#page1').css('background', 'none');
-      $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
+      $('.weather-header').removeClass('invisible').css({'margin-top': '50px', 'transition': 'all .5s ease-out' });
       $('.weather-header img').css('width', '220px');
-      $('#container,#attractions').removeClass('d-none').fadeIn("slow");
+      $('#container,#attractions,#clearSearchHistory').removeClass('d-none').fadeIn("slow");
+      
 
     });
 }
@@ -322,6 +324,12 @@ function displayForecast(city) {
 listGroup.on('click', 'button', function (event) {
   let city = $(event.target).data('city');
   displayForecast(city);
+});
+
+// Clear search history
+clearSearchHistory.on('click', function (event) {
+  localStorage.clear();
+  location.reload();
 });
 
 function addPlaces(places, map) {
