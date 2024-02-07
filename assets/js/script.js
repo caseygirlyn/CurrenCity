@@ -280,6 +280,8 @@ function displayForecast(city) {
               currency = 'BDT';
             } else if (countryCode == 'BS') {
               currency = 'BSD';
+            } else if (countryCode == 'BZ') {
+              currency = 'BZD';
             }
 
             if (currency) {
