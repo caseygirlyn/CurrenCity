@@ -262,15 +262,19 @@ function displayForecast(city) {
               currency = 'KRW';
             } else if (countryCode == 'TW') {
               currency = 'TWD';
+            } else if (countryCode == 'TH') {
+              currency = 'THB';
             }
 
-            let currencyRate = result.rates[currency].toFixed(2);
+            if (currency) {
+              let currencyRate = result.rates[currency].toFixed(2);
 
-            if (currencyRate) {
-              let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
-              currencyExchangeDiv.append(currencyData);
-            } else {
-              currencyExchangeDiv.empty();
+              if (currencyRate) {
+                let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
+                currencyExchangeDiv.append(currencyData);
+              } else {
+                currencyExchangeDiv.empty();
+              }
             }
 
           });
@@ -313,10 +317,10 @@ function displayForecast(city) {
       );
 
       $('#page1').css('background', 'none');
-      $('.weather-header').removeClass('invisible').css({'margin-top': '50px', 'transition': 'all .5s ease-out' });
+      $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
       $('.weather-header img').css('width', '220px');
       $('#container,#attractions,#clearSearchHistory').removeClass('d-none').fadeIn("slow");
-      
+
 
     });
 }
