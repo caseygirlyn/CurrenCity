@@ -276,6 +276,10 @@ function displayForecast(city) {
               currency = 'INR';
             } else if (countryCode == 'BB') {
               currency = 'BBD';
+            } else if (countryCode == 'BD') {
+              currency = 'BDT';
+            } else if (countryCode == 'BS') {
+              currency = 'BSD';
             }
 
             if (currency) {
