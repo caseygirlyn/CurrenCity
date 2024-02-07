@@ -81,10 +81,10 @@ function displayForecast(city) {
 
       let countryCode = result.city.country;
       let h2El = $('<h2>');
-      h2El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text');
+      h2El.text(`5-day Weather Forecasts in ${city}, ${countryCode} `).addClass('w-100 text-capitalize text-center primary-dark-text');
       forecast.append(h2El);
 
-      attactionsTitle.append(`Attractions in ${city}`);
+      attactionsTitle.append(`Attractions in ${city}, ${countryCode} `);
 
       //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
       for (let i = 1; i < result.list.length; i += 8) {
@@ -173,7 +173,14 @@ function displayForecast(city) {
 
                 // Convert Object to String
                 let resultCC = JSON.stringify(resultCountryCode[0].currencies);
+                let resultFlag = resultCountryCode[0].flag;
 
+                //console.log(resultFlag);
+                if(resultFlag){
+                  attactionsTitle.append(resultFlag);
+                  h2El.append(resultFlag);
+                }
+                
                 // Get the Currency Code
                 currency = resultCC.split('"')[1];
                 
