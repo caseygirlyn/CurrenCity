@@ -168,6 +168,8 @@ function displayForecast(city) {
             if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE' || countryCode == 'GR' || countryCode == 'ME' || countryCode == 'XK'
             ) {
               currency = 'EUR';
+            } else if (countryCode == 'LI' || countryCode == 'CH') {
+              currency = 'CHF';
             } else if (countryCode == 'US') {
               currency = 'USD';
             } else if (countryCode == 'BG') {
@@ -184,10 +186,6 @@ function displayForecast(city) {
               currency = 'ISK';
             } else if (countryCode == 'NO') {
               currency = 'NOK';
-            } else if (countryCode == 'LI') {
-              currency = 'CHF';
-            } else if (countryCode == 'CH') {
-              currency = 'CHF';
             } else if (countryCode == 'BA') {
               currency = 'BAM';
             } else if (countryCode == 'MD') {
