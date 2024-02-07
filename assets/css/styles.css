@@ -46,6 +46,7 @@ input#search-input:focus {
   border: 1px solid #ffd891 !important;
   transition: all 0.5s ease-out;
   max-width: 200px;
+  box-shadow: #885053 0px 5px 10px;
 }
 
 img.iconToday {
