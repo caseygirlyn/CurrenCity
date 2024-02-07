@@ -272,6 +272,8 @@ function displayForecast(city) {
               currency = 'MYR';
             } else if (countryCode == 'CN') {
               currency = 'CNY';
+            } else if (countryCode == 'IN') {
+              currency = 'INR';
             }
 
             if (currency) {
@@ -287,6 +289,7 @@ function displayForecast(city) {
 
           });
       }
+
 
       // Create the map.
       let pyrmont = { lat: lat, lng: lon };
