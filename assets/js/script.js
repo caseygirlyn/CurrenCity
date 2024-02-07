@@ -274,6 +274,8 @@ function displayForecast(city) {
               currency = 'CNY';
             } else if (countryCode == 'IN') {
               currency = 'INR';
+            } else if (countryCode == 'BB') {
+              currency = 'BBD';
             }
 
             if (currency) {
