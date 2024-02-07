@@ -264,6 +264,8 @@ function displayForecast(city) {
               currency = 'TWD';
             } else if (countryCode == 'TH') {
               currency = 'THB';
+            } else if (countryCode == 'AE') {
+              currency = 'AED';
             }
 
             if (currency) {
