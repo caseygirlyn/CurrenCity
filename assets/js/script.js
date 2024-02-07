@@ -282,6 +282,8 @@ function displayForecast(city) {
               currency = 'BZD';
             } else if (countryCode == 'CO') {
               currency = 'COP';
+            } else if (countryCode == 'CR') {
+              currency = 'CRC';
             }
 
             if (currency) {
