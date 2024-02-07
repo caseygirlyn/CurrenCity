@@ -14,7 +14,7 @@ h3 {
 #page1 {
   background-image: url("../images/logo/CurrenCitywithName.svg");
   background-size: contain;
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
   transition: all 0.5s ease-out;
 }
