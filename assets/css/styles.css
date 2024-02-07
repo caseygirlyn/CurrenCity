@@ -67,6 +67,7 @@ img.iconToday {
   overflow: hidden;
   position: relative;
   height: 80px;
+  max-width: 760px;
 }
 
 .currency-scroll {
@@ -124,6 +125,7 @@ ul {
 }
 
 li {
+  background-position: center;
   padding: 10px;
   text-overflow: ellipsis;
   cursor: pointer;
