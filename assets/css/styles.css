@@ -63,7 +63,6 @@ img.iconToday {
 
 /* scrolling currency */
 .scrolling-text-box {
-  position: relative;
   width: 100%;
   overflow: hidden;
   position: relative;
