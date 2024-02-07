@@ -157,47 +157,47 @@ function displayForecast(city) {
       let currency;
       //console.log(countryCode);
 
-      if (countryCode != 'GB') {
-        //Set Base Exchange from GBP
-        let queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
-        fetch(queryURLExchange)
-          .then(function (response) {
-            return response.json();
-          }).then(function (result) {
+      //Set Base Exchange from GBP
+      let queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
+      fetch(queryURLExchange)
+        .then(function (response) {
+          return response.json();
+        }).then(function (result) {
 
-            let queryCountryCode = 'https://restcountries.com/v3.1/alpha/' + countryCode;
-            fetch(queryCountryCode)
-              .then(function (response) {
-                return response.json();
-              }).then(function (resultCountryCode) {
+          let queryCountryCode = 'https://restcountries.com/v3.1/alpha/' + countryCode;
+          fetch(queryCountryCode)
+            .then(function (response) {
+              return response.json();
+            }).then(function (resultCountryCode) {
 
-                // Convert Object to String
-                let resultCC = JSON.stringify(resultCountryCode[0].currencies);
-                let resultFlag = resultCountryCode[0].flag;
+              // Convert Object to String
+              let resultCC = JSON.stringify(resultCountryCode[0].currencies);
+              let resultFlag = resultCountryCode[0].flag;
 
-                //console.log(resultFlag);
-                if(resultFlag){
-                  attactionsTitle.append(resultFlag);
-                  h2El.append(resultFlag);
+              //console.log(resultFlag);
+              if (resultFlag) {
+                attactionsTitle.append(resultFlag);
+                h2El.append(resultFlag);
+              }
+
+              // Get the Currency Code
+              currency = resultCC.split('"')[1];
+
+              // Exclude Country Code GB 
+              if (currency && countryCode != 'GB') {
+                let currencyRate = result.rates[currency].toFixed(2);
+
+                if (currencyRate) {
+                  let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
+                  currencyExchangeDiv.append(currencyData);
+                } else {
+                  currencyExchangeDiv.empty();
                 }
-                
-                // Get the Currency Code
-                currency = resultCC.split('"')[1];
-                
-                if (currency) {
-                  let currencyRate = result.rates[currency].toFixed(2);
+              }
 
-                  if (currencyRate) {
-                    let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
-                    currencyExchangeDiv.append(currencyData);
-                  } else {
-                    currencyExchangeDiv.empty();
-                  }
-                }
+            });
+        });
 
-              });
-          });
-      }
 
 
       // Create the map.
@@ -221,7 +221,7 @@ function displayForecast(city) {
 
       // Perform a nearby search.
       service.nearbySearch(
-        { location: pyrmont, radius: 500, type: "tourist_attraction" },
+        { location: pyrmont, radius: 500, type: 'tourist_attraction' },
         (results, status, pagination) => {
           if (status !== "OK" || !results) return;
 
@@ -260,7 +260,7 @@ function addPlaces(places, map) {
   let placesList = document.getElementById("places");
   let infowindow = new google.maps.InfoWindow();
 
-  console.log(places);
+  //console.log(places);
 
   for (let place of places) {
     if (place.geometry && place.geometry.location) {
@@ -290,7 +290,6 @@ function addPlaces(places, map) {
 
       let placeAddressElement = document.createElement("div");
 
-
       content.className = 'contentMarker';
       vicinity.className = 'fs-6 mb-2';
       placeRating.className = 'fs-6';
@@ -310,27 +309,26 @@ function addPlaces(places, map) {
         vicinity.textContent = place.vicinity;
         content.appendChild(vicinity);
 
-        if (place.rating) {
+        if (place.rating >= 4) {
           placeRating.textContent = 'Rating: ' + place.rating;
           content.appendChild(placeRating);
-        };
-
-        placeAddressElement.textContent = place.formatted_address;
-        content.appendChild(placeAddressElement);
-
+          placeAddressElement.textContent = place.formatted_address;
+          content.appendChild(placeAddressElement);
+        }
         infowindow.setContent(content);
         infowindow.open(map, marker);
       });
 
       let li = document.createElement("li");
 
-      if (photos) {
+      if (photos && place.rating >= 4) {
         // Add sidebar places images
         let placeImageURL = photos[0].getUrl();
         placeImage.src = placeImageURL;
         placeImage.className = 'placeImage';
         li.style.backgroundImage = `url(${placeImageURL})`;
         nameElement.textContent = place.name;
+
         li.appendChild(nameElement);
         placesList.appendChild(li);
 
@@ -346,10 +344,8 @@ function addPlaces(places, map) {
           vicinity.textContent = place.vicinity;
           content.appendChild(vicinity);
 
-          if (place.rating) {
-            placeRating.textContent = 'Rating: ' + place.rating;
-            content.appendChild(placeRating);
-          }
+          placeRating.textContent = 'Rating: ' + place.rating;
+          content.appendChild(placeRating);
 
           placeAddressElement.textContent = place.formatted_address;
           content.appendChild(placeAddressElement);
