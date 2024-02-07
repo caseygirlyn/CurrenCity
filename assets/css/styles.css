@@ -2,20 +2,21 @@
   --primary-dark: #885053;
   --secondary-light: #ffd891;
   --secondary-dark: #d5573b;
-  --new-font-family: "Single Day", "Open Sans", "Helvetica Neue";
+  --new-font-family: "Nunito", "PT Sans", "Helvetica Neue";
 }
 
 #search-input,
 h2,
 h3 {
-  font-family: var(--new-font-family);
+  font-family: "Nunito";
 }
 
 #page1 {
   background-image: url("../images/logo/CurrenCitywithName.svg");
   background-size: contain;
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
+  transition: all 0.5s ease-out;
 }
 
 input#search-input {
@@ -44,7 +45,7 @@ input#search-input:focus {
   background-color: #fff4e1 !important;
   border: 1px solid #ffd891 !important;
   transition: all 0.5s ease-out;
-  max-width: 135px;
+  max-width: 200px;
 }
 
 img.iconToday {
@@ -60,13 +61,30 @@ img.iconToday {
   font-size: 12px;
 }
 
-.currencyText {
-  background-color: var(--secondary-dark);
-  color: #fff;
-  margin: 1rem auto;
-  padding: 0.25rem 0.75rem;
-  width: max-content;
-  font-size: 20px;
+/* scrolling currency */
+.scrolling-text-box {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 80px;
+  max-width: 760px;
+}
+
+.currency-scroll {
+  color: #885053;
+  font-family: "Nunito", sans-serif;
+  font-size: 30px;
+  animation: scroll-left 12s linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 #container {
@@ -107,6 +125,7 @@ ul {
 }
 
 li {
+  background-position: center;
   padding: 10px;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -120,9 +139,11 @@ li {
 }
 
 ul#places li h4 {
-  background-color: #ffffffd1;
+  background-color: #fffefeb3;
   padding: 0.25rem 0.5rem;
-  font-family: var(--new-font-family);
+  font-family: "Nunito";
+  border: 1px solid;
+  font-size: 20px;
 }
 
 #more {
@@ -157,8 +178,14 @@ ul#places li h4 {
 }
 
 .contentMarker h3 {
+  color: var(--secondary-dark);
+  font-size: 20px;
   line-height: 25px;
   margin-top: 0.5rem;
+}
+
+.gm-style .gm-style-iw-c {
+  padding: 18px;
 }
 
 button.gm-ui-hover-effect {
@@ -168,6 +195,39 @@ button.gm-ui-hover-effect {
   outline: none;
   top: 0 !important;
   right: 0 !important;
+}
+
+.footer {
+  position: static;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #d5573b;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  z-index: 1000; /* Ensures the footer appears above other content */
+}
+
+#scrollUp {
+  font-size: 40px;
+  right: 15px;
+  bottom: 15px;
+}
+
+#scrollUp:hover {
+  transform: translateY(-10px);
+  transition: transform 0.3s ease;
+}
+
+.footer h2 {
+  margin: 0;
+  color: #fff;
+}
+.footer p {
+  margin-top: 5px;
+  color: #e0dfdf;
 }
 
 @media (max-width: 767px) {
@@ -180,5 +240,8 @@ button.gm-ui-hover-effect {
   }
   #sidebar {
     margin-top: 1rem;
+  }
+  .bg-forecasts {
+    max-width: 150px;
   }
 }

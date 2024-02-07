@@ -6,6 +6,7 @@ let forecast = $('#forecast');
 let divContainer = $('<div>');
 let rowContainer = $('<div>');
 let attactionsTitle = $('#attractionsTitle');
+let clearSearchHistory = $('#clearSearchHistory');
 
 let lat;
 let lon;
@@ -80,10 +81,10 @@ function displayForecast(city) {
 
       let countryCode = result.city.country;
       let h2El = $('<h2>');
-      h2El.text(`${city} 5-day Weather Forecasts:`).addClass('w-100 text-capitalize text-center primary-dark-text');
+      h2El.text(`5-day Weather Forecasts in ${city}, ${countryCode} `).addClass('w-100 text-capitalize text-center primary-dark-text');
       forecast.append(h2El);
 
-      attactionsTitle.append(`Attractions in ${city}`);
+      attactionsTitle.append(`Attractions in ${city}, ${countryCode} `);
 
       //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
       for (let i = 1; i < result.list.length; i += 8) {
@@ -156,124 +157,48 @@ function displayForecast(city) {
       let currency;
       //console.log(countryCode);
 
-      if (countryCode != 'GB') {
-        //Set Base Exchange from GBP
-        let queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
-        fetch(queryURLExchange)
-          .then(function (response) {
-            return response.json();
-          }).then(function (result) {
+      //Set Base Exchange from GBP
+      let queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
+      fetch(queryURLExchange)
+        .then(function (response) {
+          return response.json();
+        }).then(function (result) {
 
-            if (countryCode == 'BE' || countryCode == 'BG' || countryCode == 'CZ' || countryCode == 'DK' || countryCode == 'DE' || countryCode == 'EE' || countryCode == 'IE' || countryCode == 'EL' || countryCode == 'ES' || countryCode == 'FR' || countryCode == 'HR' || countryCode == 'IT' || countryCode == 'CY' || countryCode == 'LV' || countryCode == 'LT' || countryCode == 'LU' || countryCode == 'HU' || countryCode == 'MC' || countryCode == 'MT' || countryCode == 'NL' || countryCode == 'AT' || countryCode == 'PL' || countryCode == 'PT' || countryCode == 'RO' || countryCode == 'SI' || countryCode == 'SK' || countryCode == 'FI' || countryCode == 'SE' || countryCode == 'GR' || countryCode == 'ME' || countryCode == 'XK'
-            ) {
-              currency = 'EUR';
-            } else if (countryCode == 'US') {
-              currency = 'USD';
-            } else if (countryCode == 'BG') {
-              currency = 'BGN';
-            } else if (countryCode == 'CZ') {
-              currency = 'CZK';
-            } else if (countryCode == 'DK') {
-              currency = 'DKK';
-            } else if (countryCode == 'SG') {
-              currency = 'SGD';
-            } else if (countryCode == 'PH') {
-              currency = 'PHP';
-            } else if (countryCode == 'IS') {
-              currency = 'ISK';
-            } else if (countryCode == 'NO') {
-              currency = 'NOK';
-            } else if (countryCode == 'LI') {
-              currency = 'CHF';
-            } else if (countryCode == 'CH') {
-              currency = 'CHF';
-            } else if (countryCode == 'BA') {
-              currency = 'BAM';
-            } else if (countryCode == 'MD') {
-              currency = 'MDL';
-            } else if (countryCode == 'MK') {
-              currency = 'MKD';
-            } else if (countryCode == 'GE') {
-              currency = 'GEL';
-            } else if (countryCode == 'AL') {
-              currency = 'ALL';
-            } else if (countryCode == 'RS') {
-              currency = 'RSD';
-            } else if (countryCode == 'TR') {
-              currency = 'TRY';
-            } else if (countryCode == 'UA') {
-              currency = 'UAH';
-            } else if (countryCode == 'AM') {
-              currency = 'AMD';
-            } else if (countryCode == 'BY') {
-              currency = 'BYN';
-            } else if (countryCode == 'AZ') {
-              currency = 'AZN';
-            } else if (countryCode == 'DZ') {
-              currency = 'DZD';
-            } else if (countryCode == 'LB') {
-              currency = 'LBP';
-            } else if (countryCode == 'SY') {
-              currency = 'SYP';
-            } else if (countryCode == 'EG') {
-              currency = 'EGP';
-            } else if (countryCode == 'LY') {
-              currency = 'LYD';
-            } else if (countryCode == 'TN') {
-              currency = 'TND';
-            } else if (countryCode == 'IL') {
-              currency = 'ILS';
-            } else if (countryCode == 'MA') {
-              currency = 'MAD';
-            } else if (countryCode == 'JO') {
-              currency = 'JOD';
-            } else if (countryCode == 'PS') {
-              currency = 'ILS';
-            } else if (countryCode == 'AR') {
-              currency = 'ARS';
-            } else if (countryCode == 'AU') {
-              currency = 'AUD';
-            } else if (countryCode == 'BR') {
-              currency = 'BRL';
-            } else if (countryCode == 'CA') {
-              currency = 'CAD';
-            } else if (countryCode == 'CN_X_HK') {
-              currency = 'CNY';
-            } else if (countryCode == 'HK') {
-              currency = 'HKD';
-            } else if (countryCode == 'IN') {
-              currency = 'INR';
-            } else if (countryCode == 'JP') {
-              currency = 'JPY';
-            } else if (countryCode == 'MX') {
-              currency = 'MXN';
-            } else if (countryCode == 'NG') {
-              currency = 'NGN';
-            } else if (countryCode == 'NZ') {
-              currency = 'NZD';
-            } else if (countryCode == 'RU') {
-              currency = 'RUB';
-            } else if (countryCode == 'SG') {
-              currency = 'SGD';
-            } else if (countryCode == 'ZA') {
-              currency = 'ZAR';
-            } else if (countryCode == 'KR') {
-              currency = 'KRW';
-            } else if (countryCode == 'TW') {
-              currency = 'TWD';
-            }
+          let queryCountryCode = 'https://restcountries.com/v3.1/alpha/' + countryCode;
+          fetch(queryCountryCode)
+            .then(function (response) {
+              return response.json();
+            }).then(function (resultCountryCode) {
 
-            let currencyRate = result.rates[currency].toFixed(2);
+              // Convert Object to String
+              let resultCC = JSON.stringify(resultCountryCode[0].currencies);
+              let resultFlag = resultCountryCode[0].flag;
 
-            if (currencyRate) {
-              let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
-              currencyExchangeDiv.append(currencyData);
-            } else {
-              currencyExchangeDiv.empty();
-            }
+              //console.log(resultFlag);
+              if (resultFlag) {
+                attactionsTitle.append(resultFlag);
+                h2El.append(resultFlag);
+              }
 
-          });
-      }
+              // Get the Currency Code
+              currency = resultCC.split('"')[1];
+
+              // Exclude Country Code GB 
+              if (currency && countryCode != 'GB') {
+                let currencyRate = result.rates[currency].toFixed(2);
+
+                if (currencyRate) {
+                  let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
+                  currencyExchangeDiv.append(currencyData);
+                } else {
+                  currencyExchangeDiv.empty();
+                }
+              }
+
+            });
+        });
+
+
 
       // Create the map.
       let pyrmont = { lat: lat, lng: lon };
@@ -296,7 +221,7 @@ function displayForecast(city) {
 
       // Perform a nearby search.
       service.nearbySearch(
-        { location: pyrmont, radius: 500, type: "tourist_attraction" },
+        { location: pyrmont, radius: 500, type: 'tourist_attraction' },
         (results, status, pagination) => {
           if (status !== "OK" || !results) return;
 
@@ -314,7 +239,8 @@ function displayForecast(city) {
       $('#page1').css('background', 'none');
       $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
       $('.weather-header img').css('width', '220px');
-      $('#container,#attractions').removeClass('d-none').fadeIn("slow");
+      $('#container,#attractions,#clearSearchHistory').removeClass('d-none').fadeIn("slow");
+
 
     });
 }
@@ -324,11 +250,17 @@ listGroup.on('click', 'button', function (event) {
   displayForecast(city);
 });
 
+// Clear search history
+clearSearchHistory.on('click', function (event) {
+  localStorage.clear();
+  location.reload();
+});
+
 function addPlaces(places, map) {
   let placesList = document.getElementById("places");
   let infowindow = new google.maps.InfoWindow();
 
-  console.log(places);
+  //console.log(places);
 
   for (let place of places) {
     if (place.geometry && place.geometry.location) {
@@ -354,10 +286,13 @@ function addPlaces(places, map) {
       let nameElement = document.createElement("h4");
       let nameElement2 = document.createElement("h3");
       let placeRating = document.createElement("div");
+      let vicinity = document.createElement("div");
+
       let placeAddressElement = document.createElement("div");
 
-
       content.className = 'contentMarker';
+      vicinity.className = 'fs-6 mb-2';
+      placeRating.className = 'fs-6';
 
       google.maps.event.addListener(marker, "click", () => {
 
@@ -371,25 +306,29 @@ function addPlaces(places, map) {
         nameElement2.textContent = place.name;
         content.appendChild(nameElement2);
 
-        placeRating.textContent = 'Rating: ' + place.rating;
-        content.appendChild(placeRating);
+        vicinity.textContent = place.vicinity;
+        content.appendChild(vicinity);
 
-        placeAddressElement.textContent = place.formatted_address;
-        content.appendChild(placeAddressElement);
-
+        if (place.rating >= 4) {
+          placeRating.textContent = 'Rating: ' + place.rating;
+          content.appendChild(placeRating);
+          placeAddressElement.textContent = place.formatted_address;
+          content.appendChild(placeAddressElement);
+        }
         infowindow.setContent(content);
         infowindow.open(map, marker);
       });
 
       let li = document.createElement("li");
 
-      if (photos) {
+      if (photos && place.rating >= 4) {
         // Add sidebar places images
         let placeImageURL = photos[0].getUrl();
         placeImage.src = placeImageURL;
         placeImage.className = 'placeImage';
         li.style.backgroundImage = `url(${placeImageURL})`;
         nameElement.textContent = place.name;
+
         li.appendChild(nameElement);
         placesList.appendChild(li);
 
@@ -401,6 +340,9 @@ function addPlaces(places, map) {
 
           nameElement2.textContent = place.name;
           content.appendChild(nameElement2);
+
+          vicinity.textContent = place.vicinity;
+          content.appendChild(vicinity);
 
           placeRating.textContent = 'Rating: ' + place.rating;
           content.appendChild(placeRating);
