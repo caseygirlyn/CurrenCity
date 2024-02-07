@@ -266,6 +266,8 @@ function displayForecast(city) {
               currency = 'THB';
             } else if (countryCode == 'AE') {
               currency = 'AED';
+            } else if (countryCode == 'MO') {
+              currency = 'MOP';
             }
 
             if (currency) {
