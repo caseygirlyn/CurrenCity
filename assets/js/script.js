@@ -268,6 +268,8 @@ function displayForecast(city) {
               currency = 'AED';
             } else if (countryCode == 'MO') {
               currency = 'MOP';
+            } else if (countryCode == 'MY') {
+              currency = 'MYR';
             }
 
             if (currency) {
