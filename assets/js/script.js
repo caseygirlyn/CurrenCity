@@ -270,6 +270,8 @@ function displayForecast(city) {
               currency = 'MOP';
             } else if (countryCode == 'MY') {
               currency = 'MYR';
+            } else if (countryCode == 'CN') {
+              currency = 'CNY';
             }
 
             if (currency) {
