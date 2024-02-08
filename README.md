@@ -18,7 +18,10 @@ Welcome to the CurrenCity App! This application allows you to get real-time info
 - **Version Control:** Git
 
 ## Screenshots
+![Home Page](./assets/images/CurrenCity.gif)
 
+## Link to Project
+The live version of this project can be found [here](https://caseygirlyn.github.io/CurrenCity/).
 
 ## License
 
