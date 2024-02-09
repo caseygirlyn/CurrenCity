@@ -46,12 +46,13 @@ input#search-input:focus {
   border: 1px solid #ffd891 !important;
   transition: all 0.5s ease-out;
   max-width: 200px;
-  box-shadow: #885053 0px 5px 10px;
+  box-shadow: #c9b9b9 0px 5px 10px;
 }
 
-img.iconToday {
-  margin-top: -10px;
-  margin-bottom: -10px;
+img.iconForecast {
+  margin-top: -15px;
+  margin-bottom: -15px;
+  width: 80px;
 }
 
 .primary-dark-text {
@@ -227,7 +228,6 @@ button.gm-ui-hover-effect {
   color: #fff;
 }
 .footer p {
-  margin-top: 5px;
   color: #e0dfdf;
 }
 
