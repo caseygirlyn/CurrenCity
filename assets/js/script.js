@@ -7,6 +7,7 @@ let divContainer = $('<div>');
 let rowContainer = $('<div>');
 let attactionsTitle = $('#attractionsTitle');
 let clearSearchHistory = $('#clearSearchHistory');
+let places = $('#places');
 
 let lat;
 let lon;
@@ -41,7 +42,7 @@ searchButton.on('click', function (event) {
     }
   }
 
-  // If the city doesn't exist in the local storage, call function displayCurrentWeather(city) and displayForecast(city)
+  // If the city doesn't exist in the local storage, call function displayForecast(city)
   if (cityExists === 0 && city !== '') {
     // Set the key of the new city to localStorage.length + 1
     localStorage.setItem(localStorage.length + 1, city);
@@ -64,10 +65,11 @@ function displayForecast(city) {
 
   // Create variable queryURL and store the URL with parameters city and appid to make an API call
   let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=6a43ea209a0fd6d7d6a35882a4db10c4`;
+  console.log(queryURL);
   rowContainer.empty();
   divContainer.empty();
   forecast.empty();
-  $('#places').empty();
+  places.empty();
   attactionsTitle.empty();
 
   //  Method to call 5 day / 3 hour forecast data
@@ -87,7 +89,7 @@ function displayForecast(city) {
       attactionsTitle.append(`Attractions in ${city}, ${countryCode} `);
 
       //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
-      for (let i = 1; i < result.list.length; i += 8) {
+      for (let i = 1; i < result.cnt; i += 8) {
 
         // Get the icon from the API response
         let icon = result.list[i].weather[0].icon;
@@ -117,7 +119,7 @@ function displayForecast(city) {
           iconSrc = 'https://openweathermap.org/img/wn/' + icon + '@2x.png';
         }
 
-        iconForecast.addClass('iconToday').attr('src', iconSrc);
+        iconForecast.addClass('iconForecast').attr('src', iconSrc);
 
         // Get the date from the API response and add it into <h4> tag 
         let cityDate = result.list[i].dt_txt;
@@ -188,7 +190,7 @@ function displayForecast(city) {
                 let currencyRate = result.rates[currency].toFixed(2);
 
                 if (currencyRate) {
-                  let currencyData = `<p class='currencyText rounded-1'>1 GBP = ${currencyRate} ${currency}</p>`;
+                  let currencyData = `<p class='currencyText rounded-1 w-auto'>1 GBP = ${currencyRate} ${currency}</p>`;
                   currencyExchangeDiv.append(currencyData);
                 } else {
                   currencyExchangeDiv.empty();
@@ -198,15 +200,14 @@ function displayForecast(city) {
             });
         });
 
-
-
       // Create the map.
-      let pyrmont = { lat: lat, lng: lon };
+      let nearby = { lat: lat, lng: lon };
       let map = new google.maps.Map(document.getElementById("map"), {
-        center: pyrmont,
-        zoom: 16,
+        center: nearby,
+        zoom: 14,
         mapId: "8d193001f940fde3",
       });
+
       // Create the places service.
       let service = new google.maps.places.PlacesService(map);
       let getNextPage;
@@ -221,7 +222,7 @@ function displayForecast(city) {
 
       // Perform a nearby search.
       service.nearbySearch(
-        { location: pyrmont, radius: 500, type: 'tourist_attraction' },
+        { location: nearby, radius: 5000, type: 'tourist_attraction' },
         (results, status, pagination) => {
           if (status !== "OK" || !results) return;
 
@@ -241,7 +242,6 @@ function displayForecast(city) {
       $('.weather-header img').css('width', '220px');
       $('#container,#attractions,#clearSearchHistory').removeClass('d-none').fadeIn("slow");
 
-
     });
 }
 
@@ -260,7 +260,11 @@ function addPlaces(places, map) {
   let placesList = document.getElementById("places");
   let infowindow = new google.maps.InfoWindow();
 
-  //console.log(places);
+  // Add Google maps animated marker
+  const customMarker = {
+    url: `./assets/images/marker.gif`, 
+    scaledSize: new google.maps.Size(40, 40),
+  };
 
   for (let place of places) {
     if (place.geometry && place.geometry.location) {
@@ -275,7 +279,7 @@ function addPlaces(places, map) {
       let marker = new google.maps.Marker({
         map,
         animation: google.maps.Animation.DROP,
-        icon: image,
+        icon: customMarker,
         title: place.name,
         position: place.geometry.location,
       });
@@ -287,7 +291,6 @@ function addPlaces(places, map) {
       let nameElement2 = document.createElement("h3");
       let placeRating = document.createElement("div");
       let vicinity = document.createElement("div");
-
       let placeAddressElement = document.createElement("div");
 
       content.className = 'contentMarker';
