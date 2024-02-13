@@ -1,13 +1,13 @@
-let searchButton = $('#search-button');
-let searchInput = $('#search-input');
-let listGroup = $('#history');
-let todaySection = $('#today');
-let forecast = $('#forecast');
-let divContainer = $('<div>');
-let rowContainer = $('<div>');
-let attactionsTitle = $('#attractionsTitle');
-let clearSearchHistory = $('#clearSearchHistory');
-let places = $('#places');
+const searchButton = $('#search-button');
+const searchInput = $('#search-input');
+const listGroup = $('#history');
+const todaySection = $('#today');
+const forecast = $('#forecast');
+const divContainer = $('<div>');
+const rowContainer = $('<div>');
+const attactionsTitle = $('#attractionsTitle');
+const clearSearchHistory = $('#clearSearchHistory');
+const places = $('#places');
 
 let lat;
 let lon;
@@ -46,7 +46,6 @@ searchButton.on('click', function (event) {
   if (cityExists === 0 && city !== '') {
     // Set the key of the new city to localStorage.length + 1
     localStorage.setItem(localStorage.length + 1, city);
-    //displayCurrentWeather(city);
     displayForecast(city);
     let btnEl = $('<button>').addClass('btn btn-light m-1 text-capitalize').text(city);
     // Append the button to the list button group below the search form
@@ -60,187 +59,193 @@ searchButton.on('click', function (event) {
 
 function displayForecast(city) {
 
-  let currencyExchangeDiv = $('#currencyExchange');
+  const currencyExchangeDiv = $('#currencyExchange');
   currencyExchangeDiv.empty();
 
-  // Create variable queryURL and store the URL with parameters city and appid to make an API call
-  let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=6a43ea209a0fd6d7d6a35882a4db10c4`;
-  console.log(queryURL);
-  rowContainer.empty();
-  divContainer.empty();
-  forecast.empty();
-  places.empty();
-  attactionsTitle.empty();
+  let getLatLon = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=6a43ea209a0fd6d7d6a35882a4db10c4`;
 
-  //  Method to call 5 day / 3 hour forecast data
-  fetch(queryURL)
+  fetch(getLatLon)
     .then(function (response) {
       return response.json();
-    }).then(function (result) {
+    }).then(function (resultLatLon) {
+      
+      lat = resultLatLon[0].lat;
+      lon = resultLatLon[0].lon;
 
-      lat = result.city.coord.lat;
-      lon = result.city.coord.lon;
+      // Create variable queryURL and store the URL with parameters city and appid to make an API call
+      let queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=6a43ea209a0fd6d7d6a35882a4db10c4`;
 
-      let countryCode = result.city.country;
-      let h2El = $('<h2>');
-      h2El.text(`5-day Weather Forecasts in ${city}, ${countryCode} `).addClass('w-100 text-capitalize text-center primary-dark-text');
-      forecast.append(h2El);
+      rowContainer.empty();
+      divContainer.empty();
+      forecast.empty();
+      places.empty();
+      attactionsTitle.empty();
 
-      attactionsTitle.append(`Attractions in ${city}, ${countryCode} `);
-
-      //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
-      for (let i = 1; i < result.cnt; i += 8) {
-
-        // Get the icon from the API response
-        let icon = result.list[i].weather[0].icon;
-        iconForecast = $('<img>');
-
-        //console.log(icon);
-
-        if (icon === '01d') {
-          iconSrc = './assets/images/icons/day.svg'
-        } else if (icon === '01n') {
-          iconSrc = './assets/images/icons/night.svg'
-        } else if (icon === '03d') {
-          iconSrc = './assets/images/icons/cloudy.svg'
-        } else if (icon === '03n') {
-          iconSrc = './assets/images/icons/cloudy-night-2.svg'
-        } else if (icon === '02d' || icon === '02n' || icon === '04d' || icon === '04n') {
-          iconSrc = './assets/images/icons/cloudy.svg'
-        } else if (icon === '09d' || icon === '09n') {
-          iconSrc = './assets/images/icons/shower-rain.svg'
-        } else if (icon === '10d' || icon === '10n') {
-          iconSrc = './assets/images/icons/rain.svg'
-        } else if (icon === '11d' || icon === '11n') {
-          iconSrc = './assets/images/icons/thunder.svg'
-        } else if (icon === '13d' || icon === '13n') {
-          iconSrc = './assets/images/icons/snow.svg'
-        } else {
-          iconSrc = 'https://openweathermap.org/img/wn/' + icon + '@2x.png';
-        }
-
-        iconForecast.addClass('iconForecast').attr('src', iconSrc);
-
-        // Get the date from the API response and add it into <h4> tag 
-        let cityDate = result.list[i].dt_txt;
-        let date = dayjs(cityDate).format('ddd D/M/YYYY');
-        let pDate = $('<p>');
-        pDate.addClass('fw-bold mb-0 small-text').text(date);
-
-        // Get the temperature value from the API response and add it into <p> tag 
-        let temperature = Math.floor(result.list[i].main.temp - 273.15);
-        let pTemp = $('<p>');
-        pTemp.addClass('mb-0 small-text').text(`Temperature: ${temperature} °C`);
-
-        // Get the wind speed value from the API response and add it into <p> tag
-        // Multiply the speed value by 3.6 to convert meter per second to kilometer per hour
-        let wind = result.list[i].wind.speed * 3.6;
-        let pWind = $('<p>');
-        pWind.addClass('mb-0 small-text').text(`Wind: ${wind.toFixed(2)} KPH`);
-
-        // Get the humidity value from the API response and add it into <p> tag 
-        let humidity = result.list[i].main.humidity;
-        let pHumidity = $('<p>');
-        pHumidity.addClass('mb-0 small-text').text(`Humidity: ${humidity} %`);
-
-        // Create divCol variable and append elements to display 5 day weather forecast 
-        let divCol = $('<div>');
-        divCol.addClass('col-sm col-xs-12 px-2 py-3 bg-forecasts rounded-2 text-center m-1');
-        divCol.append(pDate, iconForecast, pTemp, pWind, pHumidity);
-
-        // Append divCol to rowContainer
-        rowContainer.append(divCol).addClass('row m-0 align-content-center flex-row justify-content-center');
-
-        // Append rowContainer to forecast section
-        forecast.append(rowContainer);
-
-      }
-
-      let currency;
-      //console.log(countryCode);
-
-      //Set Base Exchange from GBP
-      let queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
-      fetch(queryURLExchange)
+      //  Method to call 5 day / 3 hour forecast data
+      fetch(queryURL)
         .then(function (response) {
           return response.json();
         }).then(function (result) {
 
-          let queryCountryCode = 'https://restcountries.com/v3.1/alpha/' + countryCode;
-          fetch(queryCountryCode)
+          let countryCode = result.city.country;
+          const h2El = $('<h2>');
+          h2El.text(`5-day Weather Forecasts in ${city}, ${countryCode} `).addClass('w-100 text-capitalize text-center primary-dark-text');
+          forecast.append(h2El);
+
+          attactionsTitle.append(`Attractions in ${city}, ${countryCode} `);
+
+          //  Loop through the 3 hour forecast data and increase the count by 8 to get the next 5-day forecast 
+          for (let i = 1; i < result.cnt; i += 8) {
+
+            // Get the icon from the API response
+            let icon = result.list[i].weather[0].icon;
+            iconForecast = $('<img>');
+
+            if (icon === '01d') {
+              iconSrc = './assets/images/icons/day.svg'
+            } else if (icon === '01n') {
+              iconSrc = './assets/images/icons/night.svg'
+            } else if (icon === '03d') {
+              iconSrc = './assets/images/icons/cloudy.svg'
+            } else if (icon === '03n') {
+              iconSrc = './assets/images/icons/cloudy-night-2.svg'
+            } else if (icon === '02d' || icon === '02n' || icon === '04d' || icon === '04n') {
+              iconSrc = './assets/images/icons/cloudy.svg'
+            } else if (icon === '09d' || icon === '09n') {
+              iconSrc = './assets/images/icons/shower-rain.svg'
+            } else if (icon === '10d' || icon === '10n') {
+              iconSrc = './assets/images/icons/rain.svg'
+            } else if (icon === '11d' || icon === '11n') {
+              iconSrc = './assets/images/icons/thunder.svg'
+            } else if (icon === '13d' || icon === '13n') {
+              iconSrc = './assets/images/icons/snow.svg'
+            } else {
+              iconSrc = 'https://openweathermap.org/img/wn/' + icon + '@2x.png';
+            }
+
+            iconForecast.addClass('iconForecast').attr('src', iconSrc);
+
+            // Get the date from the API response and add it into <h4> tag 
+            let cityDate = result.list[i].dt_txt;
+            let date = dayjs(cityDate).format('ddd D/M/YYYY');
+            const pDate = $('<p>');
+            pDate.addClass('fw-bold mb-0 small-text').text(date);
+
+            // Get the temperature value from the API response and add it into <p> tag 
+            let temperature = Math.floor(result.list[i].main.temp - 273.15);
+            const pTemp = $('<p>');
+            pTemp.addClass('mb-0 small-text').text(`Temperature: ${temperature} °C`);
+
+            // Get the wind speed value from the API response and add it into <p> tag
+            // Multiply the speed value by 3.6 to convert meter per second to kilometer per hour
+            let wind = result.list[i].wind.speed * 3.6;
+            const pWind = $('<p>');
+            pWind.addClass('mb-0 small-text').text(`Wind: ${wind.toFixed(2)} KPH`);
+
+            // Get the humidity value from the API response and add it into <p> tag 
+            let humidity = result.list[i].main.humidity;
+            const pHumidity = $('<p>');
+            pHumidity.addClass('mb-0 small-text').text(`Humidity: ${humidity} %`);
+
+            // Create divCol variable and append elements to display 5 day weather forecast 
+            let divCol = $('<div>');
+            divCol.addClass('col-sm col-xs-12 px-2 py-3 bg-forecasts rounded-2 text-center m-1');
+            divCol.append(pDate, iconForecast, pTemp, pWind, pHumidity);
+
+            // Append divCol to rowContainer
+            rowContainer.append(divCol).addClass('row m-0 align-content-center flex-row justify-content-center');
+
+            // Append rowContainer to forecast section
+            forecast.append(rowContainer);
+
+          }
+
+          let currency;
+          
+          //Set Base Exchange from GBP
+          const queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
+          fetch(queryURLExchange)
             .then(function (response) {
               return response.json();
-            }).then(function (resultCountryCode) {
+            }).then(function (result) {
 
-              // Convert Object to String
-              let resultCC = JSON.stringify(resultCountryCode[0].currencies);
-              let resultFlag = resultCountryCode[0].flag;
+              let queryCountryCode = 'https://restcountries.com/v3.1/alpha/' + countryCode;
+              fetch(queryCountryCode)
+                .then(function (response) {
+                  return response.json();
+                }).then(function (resultCountryCode) {
 
-              //console.log(resultFlag);
-              if (resultFlag) {
-                attactionsTitle.append(resultFlag);
-                h2El.append(resultFlag);
-              }
+                  // Convert Object to String
+                  let resultCC = JSON.stringify(resultCountryCode[0].currencies);
+                  let resultFlag = resultCountryCode[0].flag;
 
-              // Get the Currency Code
-              currency = resultCC.split('"')[1];
+                  //console.log(resultFlag);
+                  if (resultFlag) {
+                    attactionsTitle.append(resultFlag);
+                    h2El.append(resultFlag);
+                  }
 
-              // Exclude Country Code GB 
-              if (currency && countryCode != 'GB') {
-                let currencyRate = result.rates[currency].toFixed(2);
+                  // Get the Currency Code
+                  currency = resultCC.split('"')[1];
 
-                if (currencyRate) {
-                  let currencyData = `<p class='currencyText rounded-1 w-auto'>1 GBP = ${currencyRate} ${currency}</p>`;
-                  currencyExchangeDiv.append(currencyData);
-                } else {
-                  currencyExchangeDiv.empty();
-                }
-              }
+                  // Exclude Country Code GB 
+                  if (currency && countryCode != 'GB') {
+                    let currencyRate = result.rates[currency].toFixed(2);
 
+                    if (currencyRate) {
+                      let currencyData = `<p class='currencyText rounded-1 w-auto'>1 GBP = ${currencyRate} ${currency}</p>`;
+                      currencyExchangeDiv.append(currencyData);
+                    } else {
+                      currencyExchangeDiv.empty();
+                    }
+                  }
+
+                });
             });
+
+          // Create the map.
+          let nearby = { lat: lat, lng: lon };
+          const map = new google.maps.Map(document.getElementById("map"), {
+            center: nearby,
+            zoom: 14,
+            mapId: "8d193001f940fde3",
+          });
+
+          // Create the places service.
+          const service = new google.maps.places.PlacesService(map);
+          const moreButton = document.getElementById("more");
+          let getNextPage;
+
+          moreButton.onclick = function () {
+            moreButton.disabled = true;
+            if (getNextPage) {
+              getNextPage();
+            }
+          };
+
+          // Perform a nearby search.
+          service.nearbySearch(
+            { location: nearby, radius: 5000, type: 'tourist_attraction' },
+            (results, status, pagination) => {
+              if (status !== "OK" || !results) return;
+
+              addPlaces(results, map);
+              moreButton.disabled = !pagination || !pagination.hasNextPage;
+              if (pagination && pagination.hasNextPage) {
+                getNextPage = () => {
+                  // Note: nextPage will call the same handler function as the initial call
+                  pagination.nextPage();
+                };
+              }
+            },
+          );
+
+          $('#page1').css('background', 'none');
+          $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
+          $('.weather-header img').css('width', '220px');
+          $('#container,#attractions,#clearSearchHistory').removeClass('d-none').fadeIn("slow");
+
         });
-
-      // Create the map.
-      let nearby = { lat: lat, lng: lon };
-      let map = new google.maps.Map(document.getElementById("map"), {
-        center: nearby,
-        zoom: 14,
-        mapId: "8d193001f940fde3",
-      });
-
-      // Create the places service.
-      let service = new google.maps.places.PlacesService(map);
-      let getNextPage;
-      let moreButton = document.getElementById("more");
-
-      moreButton.onclick = function () {
-        moreButton.disabled = true;
-        if (getNextPage) {
-          getNextPage();
-        }
-      };
-
-      // Perform a nearby search.
-      service.nearbySearch(
-        { location: nearby, radius: 5000, type: 'tourist_attraction' },
-        (results, status, pagination) => {
-          if (status !== "OK" || !results) return;
-
-          addPlaces(results, map);
-          moreButton.disabled = !pagination || !pagination.hasNextPage;
-          if (pagination && pagination.hasNextPage) {
-            getNextPage = () => {
-              // Note: nextPage will call the same handler function as the initial call
-              pagination.nextPage();
-            };
-          }
-        },
-      );
-
-      $('#page1').css('background', 'none');
-      $('.weather-header').removeClass('invisible').css({ 'margin-top': '50px', 'transition': 'all .5s ease-out' });
-      $('.weather-header img').css('width', '220px');
-      $('#container,#attractions,#clearSearchHistory').removeClass('d-none').fadeIn("slow");
 
     });
 }
@@ -257,18 +262,18 @@ clearSearchHistory.on('click', function (event) {
 });
 
 function addPlaces(places, map) {
-  let placesList = document.getElementById("places");
-  let infowindow = new google.maps.InfoWindow();
+  const placesList = document.getElementById("places");
+  const infowindow = new google.maps.InfoWindow();
 
   // Add Google maps animated marker
   const customMarker = {
-    url: `./assets/images/marker.gif`, 
+    url: `./assets/images/marker.gif`,
     scaledSize: new google.maps.Size(40, 40),
   };
 
   for (let place of places) {
     if (place.geometry && place.geometry.location) {
-      let image = {
+      const image = {
         url: place.icon,
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
@@ -276,7 +281,7 @@ function addPlaces(places, map) {
         scaledSize: new google.maps.Size(20, 20),
       };
 
-      let marker = new google.maps.Marker({
+      const marker = new google.maps.Marker({
         map,
         animation: google.maps.Animation.DROP,
         icon: customMarker,
@@ -284,14 +289,14 @@ function addPlaces(places, map) {
         position: place.geometry.location,
       });
 
-      let photos = place.photos;
-      let content = document.createElement("div");
-      let placeImage = document.createElement("img");
-      let nameElement = document.createElement("h4");
-      let nameElement2 = document.createElement("h3");
-      let placeRating = document.createElement("div");
-      let vicinity = document.createElement("div");
-      let placeAddressElement = document.createElement("div");
+      const photos = place.photos;
+      const content = document.createElement("div");
+      const placeImage = document.createElement("img");
+      const nameElement = document.createElement("h4");
+      const nameElement2 = document.createElement("h3");
+      const placeRating = document.createElement("div");
+      const vicinity = document.createElement("div");
+      const placeAddressElement = document.createElement("div");
 
       content.className = 'contentMarker';
       vicinity.className = 'fs-6 mb-2';
@@ -322,7 +327,7 @@ function addPlaces(places, map) {
         infowindow.open(map, marker);
       });
 
-      let li = document.createElement("li");
+      const li = document.createElement("li");
 
       if (photos && place.rating >= 4) {
         // Add sidebar places images
