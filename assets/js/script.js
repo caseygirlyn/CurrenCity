@@ -1,13 +1,13 @@
-let searchButton = $('#search-button');
-let searchInput = $('#search-input');
-let listGroup = $('#history');
-let todaySection = $('#today');
-let forecast = $('#forecast');
-let divContainer = $('<div>');
-let rowContainer = $('<div>');
-let attactionsTitle = $('#attractionsTitle');
-let clearSearchHistory = $('#clearSearchHistory');
-let places = $('#places');
+const searchButton = $('#search-button');
+const searchInput = $('#search-input');
+const listGroup = $('#history');
+const todaySection = $('#today');
+const forecast = $('#forecast');
+const divContainer = $('<div>');
+const rowContainer = $('<div>');
+const attactionsTitle = $('#attractionsTitle');
+const clearSearchHistory = $('#clearSearchHistory');
+const places = $('#places');
 
 let lat;
 let lon;
