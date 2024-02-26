@@ -299,11 +299,13 @@ function addPlaces(places, map) {
       let nameElement2 = document.createElement("h3");
       let placeRating = document.createElement("div");
       let vicinity = document.createElement("div");
+      let openGoogleMaps = document.createElement("div");
       let placeAddressElement = document.createElement("div");
 
       content.className = 'contentMarker';
       vicinity.className = 'fs-6 mb-2';
-      placeRating.className = 'fs-6';
+      placeRating.className = 'fs-6 mb-2';
+      openGoogleMaps.className = 'fs-6';
 
       google.maps.event.addListener(marker, "click", () => {
 
@@ -321,11 +323,15 @@ function addPlaces(places, map) {
         content.appendChild(vicinity);
 
         if (place.rating >= 4) {
-          placeRating.textContent = 'Rating: ' + place.rating;
+          placeRating.innerHTML = 'Rating: ' + place.rating + '<i class="ms-1 bi bi-star-fill text-warning"></i>';
           content.appendChild(placeRating);
           placeAddressElement.textContent = place.formatted_address;
           content.appendChild(placeAddressElement);
         }
+
+        openGoogleMaps.innerHTML = `<a class="text-secondary" href="https://www.google.com/maps/search/?api=1&query=${place.geometry.location}" target="_blank">Open in Google Maps</a>`;
+        content.appendChild(openGoogleMaps);
+
         infowindow.setContent(content);
         infowindow.open(map, marker);
       });
@@ -355,11 +361,14 @@ function addPlaces(places, map) {
           vicinity.textContent = place.vicinity;
           content.appendChild(vicinity);
 
-          placeRating.textContent = 'Rating: ' + place.rating;
+          placeRating.innerHTML = 'Rating: ' + place.rating + '<i class="ms-1 bi bi-star-fill text-warning"></i>';
           content.appendChild(placeRating);
 
           placeAddressElement.textContent = place.formatted_address;
           content.appendChild(placeAddressElement);
+
+          openGoogleMaps.innerHTML = `<a class="text-secondary" href="https://www.google.com/maps/search/?api=1&query=${place.geometry.location}" target="_blank">Open in Google Maps</a>`;
+          content.appendChild(openGoogleMaps);
 
           infowindow.setContent(content);
           infowindow.open(map, marker);
