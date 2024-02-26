@@ -46,7 +46,6 @@ searchButton.on('click', function (event) {
   if (cityExists === 0 && city !== '') {
     // Set the key of the new city to localStorage.length + 1
     localStorage.setItem(localStorage.length + 1, city);
-    //displayCurrentWeather(city);
     displayForecast(city);
     let btnEl = $('<button>').addClass('btn btn-light m-1 text-capitalize').text(city);
     // Append the button to the list button group below the search form
@@ -60,12 +59,12 @@ searchButton.on('click', function (event) {
 
 function displayForecast(city) {
 
-  let currencyExchangeDiv = $('#currencyExchange');
+  const currencyExchangeDiv = $('#currencyExchange');
   currencyExchangeDiv.empty();
 
   // Create variable queryURL and store the URL with parameters city and appid to make an API call
   let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=6a43ea209a0fd6d7d6a35882a4db10c4`;
-  console.log(queryURL);
+  
   rowContainer.empty();
   divContainer.empty();
   forecast.empty();
@@ -82,7 +81,7 @@ function displayForecast(city) {
       lon = result.city.coord.lon;
 
       let countryCode = result.city.country;
-      let h2El = $('<h2>');
+      const h2El = $('<h2>');
       h2El.text(`5-day Weather Forecasts in ${city}, ${countryCode} `).addClass('w-100 text-capitalize text-center primary-dark-text');
       forecast.append(h2El);
 
@@ -94,8 +93,6 @@ function displayForecast(city) {
         // Get the icon from the API response
         let icon = result.list[i].weather[0].icon;
         iconForecast = $('<img>');
-
-        //console.log(icon);
 
         if (icon === '01d') {
           iconSrc = './assets/images/icons/day.svg'
@@ -129,22 +126,22 @@ function displayForecast(city) {
 
         // Get the temperature value from the API response and add it into <p> tag 
         let temperature = Math.floor(result.list[i].main.temp - 273.15);
-        let pTemp = $('<p>');
+        const pTemp = $('<p>');
         pTemp.addClass('mb-0 small-text').text(`Temperature: ${temperature} °C`);
 
         // Get the wind speed value from the API response and add it into <p> tag
         // Multiply the speed value by 3.6 to convert meter per second to kilometer per hour
         let wind = result.list[i].wind.speed * 3.6;
-        let pWind = $('<p>');
+        const pWind = $('<p>');
         pWind.addClass('mb-0 small-text').text(`Wind: ${wind.toFixed(2)} KPH`);
 
         // Get the humidity value from the API response and add it into <p> tag 
         let humidity = result.list[i].main.humidity;
-        let pHumidity = $('<p>');
+        const pHumidity = $('<p>');
         pHumidity.addClass('mb-0 small-text').text(`Humidity: ${humidity} %`);
 
         // Create divCol variable and append elements to display 5 day weather forecast 
-        let divCol = $('<div>');
+        const divCol = $('<div>');
         divCol.addClass('col-sm col-xs-12 px-2 py-3 bg-forecasts rounded-2 text-center m-1');
         divCol.append(pDate, iconForecast, pTemp, pWind, pHumidity);
 
@@ -160,7 +157,7 @@ function displayForecast(city) {
       //console.log(countryCode);
 
       //Set Base Exchange from GBP
-      let queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
+      const queryURLExchange = 'https://open.er-api.com/v6/latest/GBP';
       fetch(queryURLExchange)
         .then(function (response) {
           return response.json();
@@ -172,18 +169,15 @@ function displayForecast(city) {
               return response.json();
             }).then(function (resultCountryCode) {
 
-              // Convert Object to String
-              let resultCC = JSON.stringify(resultCountryCode[0].currencies);
               let resultFlag = resultCountryCode[0].flag;
 
-              //console.log(resultFlag);
               if (resultFlag) {
                 attactionsTitle.append(resultFlag);
                 h2El.append(resultFlag);
               }
 
               // Get the Currency Code
-              currency = resultCC.split('"')[1];
+              currency = Object.keys(resultCountryCode[0].currencies).toString();
 
               // Exclude Country Code GB 
               if (currency && countryCode != 'GB') {
