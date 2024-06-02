@@ -193,10 +193,18 @@ ul#places li h4 {
 button.gm-ui-hover-effect {
   background-color: #d5573b !important;
   border-radius: 100px;
+  box-shadow: 0 2px 7px 1px rgba(0,0,0,.3);
   opacity: 1;
   outline: none;
   top: 0 !important;
   right: 0 !important;
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.gm-ui-hover-effect > span {
+  background-color: #fff;
+  margin: 1px !important;
 }
 
 .footer {
