@@ -303,8 +303,8 @@ function addPlaces(places, map) {
       let placeAddressElement = document.createElement("div");
 
       content.className = 'contentMarker';
-      vicinity.className = 'fs-6 mb-2';
-      placeRating.className = 'fs-6 mb-2';
+      vicinity.className = 'fs-6 mb-1';
+      placeRating.className = 'fs-6 mb-1';
       openGoogleMaps.className = 'fs-6';
 
       google.maps.event.addListener(marker, "click", () => {
