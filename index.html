@@ -76,7 +76,7 @@
   </main>
   <footer class="footer p-3">
     <h2>CurrenCity</h2>
-    <p class="mb-0">@2024 DreamTeamDesign Co.</p>
+    <p class="mb-0">@<span id="year"></span> DreamTeamDesign Co.</p>
   </footer>
 
   <!-- Day.js -->
@@ -96,6 +96,7 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3RBL8VN3G"></script>
   <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
